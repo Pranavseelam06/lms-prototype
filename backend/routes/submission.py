@@ -36,6 +36,32 @@ def create_submission( assignment_id: int, submission: SubmissionCreate, db: Ses
 def get_submission(submission_id: int, db: Session = Depends(get_db)):
     submission = db.query(Submission).filter(Submission.id == submission_id).first()
     if not submission:
-        raise HTTPException(status_code=404, detail="Assignment not found")
+        raise HTTPException(status_code=404, detail="Submission not found")
     return submission
+@router.get("/{assignment_id}/submissions")
+def get_submissions_for_assignment(assignment_id: int, db: Session = Depends(get_db)):
+    submissions = db.query(Submission).filter(Submission.assignment_id == assignment_id).all()
+    return submissions
+@router.put("/{submission_id}")
+def update_submission(submission_id: int, updated_data: SubmissionCreate, db: Session = Depends(get_db)):
+    submission = db.query(Submission).filter(Submission.id == submission_id).first()
+    if not submission:
+        raise HTTPException(status_code=404, detail="Submission not found")
+    submission.content = updated_data.content
+    submission.student_id = updated_data.student_id
+    submission.score = updated_data.score
+    db.commit()
+    db.refresh(submission)
+    return
+@router.delete("/{submission_id}", status_code=204)
+def delete_submission(submission_id: int, db: Session = Depends(get_db)):
+    submission = db.query(Submission).filter(Submission.id == submission_id).first()
+    if not submission:
+        raise HTTPException(status_code=404, detail="Submission not found")
+    db.delete(submission)
+    db.commit()
+    dict_returned = {
+    }
+    dict_returned["Deleted"] = f"Submission with id: {submission_id}"
+    return dict_returned
 
