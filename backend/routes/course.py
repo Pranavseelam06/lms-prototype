@@ -25,9 +25,7 @@ def get_course(course_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Course not found")
     return course
 
-@router.get("/{teacher_id}")
-def get_course_teacher(teacher_id: int, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.id == teacher_id).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return user
+@router.get("/teacher/{teacher_id}")
+def get_courses_for_teacher(teacher_id: int, db: Session = Depends(get_db)):
+    courses = db.query(Course).filter(Course.teacher_id == teacher_id).all()
+    return courses

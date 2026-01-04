@@ -38,6 +38,11 @@ def get_submission(submission_id: int, db: Session = Depends(get_db)):
     if not submission:
         raise HTTPException(status_code=404, detail="Submission not found")
     return submission
+
+@router.get("/user/{user_id}/submissions")
+def get_submission_user(user_id: int, db: Session = Depends(get_db)):
+    submissions = db.query(Submission).filter(Submission.user_id == user_id).all()
+    return submissions
 @router.get("/{assignment_id}/submissions")
 def get_submissions_for_assignment(assignment_id: int, db: Session = Depends(get_db)):
     submissions = db.query(Submission).filter(Submission.assignment_id == assignment_id).all()
