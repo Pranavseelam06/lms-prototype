@@ -28,9 +28,9 @@ def get_assignment(assignment_id: int, db: Session = Depends(get_db)):
     if not assignment:
         raise HTTPException(status_code=404, detail="Assignment not found")
     return assignment
-@router.delete("/{assignment_id}", status_code=204)
+@router.delete("/{assignment_id}", status_code=200)
 def delete_assignment(assignment_id: int, db: Session = Depends(get_db)):
-    assignment = db.query(assignment_id).filter(assignment_id.id == assignment_id).first()
+    assignment = db.query(Assignment).filter(assignment_id.id == assignment_id).first()
     if not assignment:
         raise HTTPException(status_code=404, detail="Assignment not found")
     db.delete(assignment)

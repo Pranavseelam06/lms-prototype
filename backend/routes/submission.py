@@ -41,12 +41,14 @@ def get_submission(submission_id: int, db: Session = Depends(get_db)):
 
 @router.get("/user/{user_id}/submissions")
 def get_submission_user(user_id: int, db: Session = Depends(get_db)):
-    submissions = db.query(Submission).filter(Submission.user_id == user_id).all()
+    submissions = db.query(Submission).filter(Submission.student_id == user_id).all()
     return submissions
+
 @router.get("/{assignment_id}/submissions")
 def get_submissions_for_assignment(assignment_id: int, db: Session = Depends(get_db)):
     submissions = db.query(Submission).filter(Submission.assignment_id == assignment_id).all()
     return submissions
+
 @router.put("/{submission_id}")
 def update_submission(submission_id: int, updated_data: SubmissionCreate, db: Session = Depends(get_db)):
     submission = db.query(Submission).filter(Submission.id == submission_id).first()
@@ -57,8 +59,8 @@ def update_submission(submission_id: int, updated_data: SubmissionCreate, db: Se
     submission.score = updated_data.score
     db.commit()
     db.refresh(submission)
-    return
-@router.delete("/{submission_id}", status_code=204)
+    return submission
+@router.delete("/{submission_id}", status_code=200)
 def delete_submission(submission_id: int, db: Session = Depends(get_db)):
     submission = db.query(Submission).filter(Submission.id == submission_id).first()
     if not submission:
