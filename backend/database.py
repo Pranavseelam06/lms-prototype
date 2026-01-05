@@ -1,9 +1,23 @@
-from fastapi import FastAPI, HTTPException, Depends
-from pydantic import BaseModel
-from sqlalchemy import Column, Integer, String, Float, create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base, Session
-from typing import Optional
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
 
+DATABASE_URL = "sqlite:///./lms.db"
+
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}  # needed for SQLite
+)
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
+Base = declarative_base()
+
+
+# Dependency for FastAPI routes
 def get_db():
     db = SessionLocal()
     try:

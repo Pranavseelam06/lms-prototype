@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>LMS Prototype</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <h1>LMS Prototype</h1>
+
+    <!-- Create Course -->
+    <section>
+        <h2>Create Course</h2>
+        <input id="course-name" placeholder="Course name" />
+        <input id="teacher-id" placeholder="Teacher ID" type="number" />
+        <button onclick="createCourse()">Create Course</button>
+        <p id="course-result"></p>
+    </section>
+
+    <!-- Create Assignment -->
+    <section>
+        <h2>Create Assignment</h2>
+        <input id="assignment-title" placeholder="Assignment title" />
+        <input id="due-date" type="date" />
+        <input id="course-id" placeholder="Course ID" type="number" />
+        <button onclick="createAssignment()">Create Assignment</button>
+        <p id="assignment-result"></p>
+    </section>
+
+    <!-- Submit Assignment -->
+    <section>
+        <h2>Submit Assignment</h2>
+        <textarea id="submission-content" placeholder="Submission text"></textarea>
+        <input id="submission-student-id" placeholder="Student ID" type="number" />
+        <input id="assignment-id" placeholder="Assignment ID" type="number" />
+        <button onclick="submitAssignment()">Submit</button>
+        <p id="submission-result"></p>
+    </section>
+
+    <script>
+        const API_URL = "http://localhost:8000";
+
+        async function createCourse() {
+            const res = await fetch(`${API_URL}/courses`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: document.getElementById("course-name").value,
+                    teacher_id: Number(document.getElementById("teacher-id").value)
+                })
+            });
+            document.getElementById("course-result").innerText =
+                res.ok ? "Course created!" : "Error creating course";
+        }
+
+        async function createAssignment() {
+            const courseId = document.getElementById("course-id").value;
+            const res = await fetch(`${API_URL}/courses/${courseId}/assignments`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title: document.getElementById("assignment-title").value,
+                    due_date: document.getElementById("due-date").value
+                })
+            });
+            document.getElementById("assignment-result").innerText =
+                res.ok ? "Assignment created!" : "Error creating assignment";
+        }
+
+        async function submitAssignment() {
+            const assignmentId = document.getElementById("assignment-id").value;
+            const res = await fetch(`${API_URL}/assignments/${assignmentId}/submissions`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    content: document.getElementById("submission-content").value,
+                    student_id: Number(document.getElementById("submission-student-id").value)
+                })
+            });
+            document.getElementById("submission-result").innerText =
+                res.ok ? "Submission sent!" : "Error submitting";
+        }
+    </script>
+
+</body>
+
+</html>
