@@ -5,7 +5,7 @@ from models.course import Course
 from models.user import User
 from models.submission import Submission
 from models.assignment import Assignment
-from schemas.submission import SubmissionCreate
+from controllers.submission import SubmissionCreate
 
 
 router = APIRouter(prefix="/assignments", tags=["submissions"])
