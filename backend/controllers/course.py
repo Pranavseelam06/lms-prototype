@@ -12,4 +12,4 @@ class CourseOut(BaseModel):
     teacher_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

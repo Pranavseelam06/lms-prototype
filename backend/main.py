@@ -16,9 +16,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from routes import users, courses, assignments, submissions
+from routes import user, course, assignment, submission
 
-app.include_router(users.router)
-app.include_router(courses.router)
-app.include_router(assignments.router)
-app.include_router(submissions.router)
+app.include_router(user.router)
+app.include_router(course.router)
+app.include_router(assignment.router)
+app.include_router(submission.router)

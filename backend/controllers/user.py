@@ -12,4 +12,4 @@ class UserOut(BaseModel):
     grade_level: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True

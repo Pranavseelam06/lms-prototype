@@ -13,4 +13,4 @@ class SubmissionOut(BaseModel):
     ai_feedback: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
