@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models.user import User
 from controllers.user import UserCreate
+from models.enrollment import Enrollment
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -26,3 +27,26 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
+
+@router.post("/login")
+def login(user_id: int, role: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+
+    if not user:
+        user = User(id=user_id, role=role)
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+    return user
+
+@router.post("/courses/{course_id}/join")
+def join_course(course_id: int, student_id: int, db: Session = Depends(get_db)):
+    enrollment = Enrollment(
+        student_id=student_id,
+        course_id=course_id
+    )
+    db.add(enrollment)
+    db.commit()
+    return {"message": "Joined course successfully"}
+

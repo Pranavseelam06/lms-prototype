@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from database import engine, Base
 from models import user, course, assignment, submission
+from models import enrollment
+from routes import auth, user, course, assignment, submission
+
 
 app = FastAPI()
 
@@ -19,6 +22,7 @@ app.add_middleware(
 from routes import user, course, assignment, submission
 
 app.include_router(user.router)
+app.include_router(auth.router)
 app.include_router(course.router)
 app.include_router(assignment.router)
 app.include_router(submission.router)
