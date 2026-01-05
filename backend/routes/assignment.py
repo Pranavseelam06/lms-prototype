@@ -23,6 +23,7 @@ def create_assignment(
     db_assignment = Assignment(
         title=assignment.title,
         due_date=assignment.due_date,
+        task=assignment.task,
         course_id=course_id
     )
 
@@ -44,6 +45,7 @@ def create_assignment(
 
     db_assignment = Assignment(
         title=assignment.title,
+        task=assignment.task,
         due_date=assignment.due_date,
         course_id=course.id
     )

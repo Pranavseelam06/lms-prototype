@@ -79,6 +79,7 @@
             <h3>Add Assignment</h3>
             <select id="courseSelect"></select>
             <input type="text" id="assignmentTitle" placeholder="Assignment Title">
+            <input type="text" id="assignmentTask" placeholder="Task instructions for student">
             <input type="date" id="dueDate">
             <button onclick="createAssignment()">Add Assignment</button>
         </div>
@@ -195,18 +196,20 @@
         async function createAssignment() {
             const courseId = document.getElementById('courseSelect').value;
             const title = document.getElementById('assignmentTitle').value;
+            const task = document.getElementById('assignmentTask').value;
             const dueDate = document.getElementById('dueDate').value;
 
             if (!courseId) { alert('Create a course first'); return; }
-            if (!title || !dueDate) { alert('Fill all fields'); return; }
+            if (!title || !task || !dueDate) { alert('Fill all fields'); return; }
 
             const res = await fetch(`${API}/courses/${courseId}/assignments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title: title, due_date: dueDate, course_id: parseInt(courseId) })
+                body: JSON.stringify({ title: title, task: task, due_date: dueDate, course_id: parseInt(courseId) })
             });
             if (res.ok) {
                 document.getElementById('assignmentTitle').value = '';
+                document.getElementById('assignmentTask').value = '';
                 alert('Assignment created!');
             } else {
                 const err = await res.json();
@@ -235,10 +238,10 @@
             const res = await fetch(`${API}/courses/students/${user.id}/assignments`);
             const assignments = await res.json();
 
-            let html = '<table><tr><th>ID</th><th>Title</th><th>Due Date</th></tr>';
+            let html = '<table><tr><th>ID</th><th>Title</th><th>Task</th><th>Due Date</th></tr>';
             let options = '';
             assignments.forEach(a => {
-                html += `<tr><td>${a.id}</td><td>${a.title}</td><td>${a.due_date}</td></tr>`;
+                html += `<tr><td>${a.id}</td><td>${a.title}</td><td>${a.task}</td><td>${a.due_date}</td></tr>`;
                 options += `<option value="${a.id}">${a.title}</option>`;
             });
             html += '</table>';

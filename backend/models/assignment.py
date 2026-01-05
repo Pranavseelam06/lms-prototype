@@ -8,6 +8,7 @@ class Assignment(Base):
     __tablename__ = "assignments"
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
+    task = Column(String, nullable = False)
     due_date = Column(Date, nullable = False)
     course_id = Column(Integer, ForeignKey("courses.id"))
 
