@@ -31,6 +31,11 @@
             border: none;
         }
 
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
         .hidden {
             display: none;
         }
@@ -46,6 +51,24 @@
             border: 1px solid #ccc;
             padding: 8px;
             text-align: left;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -111,7 +134,7 @@
             <h3>Submit Assignment</h3>
             <select id="assignmentSelect"></select>
             <textarea id="submissionContent" placeholder="Your answer" rows="4" cols="50"></textarea><br>
-            <button onclick="submitAssignment()">Submit</button>
+            <button id="submitBtn" onclick="submitAssignment()">Submit</button>
         </div>
 
         <div class="section">
@@ -263,22 +286,33 @@
         async function submitAssignment() {
             const assignmentId = document.getElementById('assignmentSelect').value;
             const content = document.getElementById('submissionContent').value;
+            const btn = document.getElementById('submitBtn');
 
             if (!assignmentId) { alert('No assignment selected'); return; }
             if (!content) { alert('Enter your answer'); return; }
 
-            const res = await fetch(`${API}/assignments/${assignmentId}/submissions`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content: content, assignment_id: parseInt(assignmentId), student_id: user.id })
-            });
-            if (res.ok) {
-                document.getElementById('submissionContent').value = '';
-                alert('Submitted!');
-                loadStudentData();
-            } else {
-                const err = await res.json();
-                alert('Error: ' + err.detail);
+            // Show loading state
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Grading...';
+
+            try {
+                const res = await fetch(`${API}/assignments/${assignmentId}/submissions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: content, assignment_id: parseInt(assignmentId), student_id: user.id })
+                });
+                if (res.ok) {
+                    document.getElementById('submissionContent').value = '';
+                    alert('Submitted and graded!');
+                    loadStudentData();
+                } else {
+                    const err = await res.json();
+                    alert('Error: ' + err.detail);
+                }
+            } finally {
+                // Reset button
+                btn.disabled = false;
+                btn.innerHTML = 'Submit';
             }
         }
     </script>
