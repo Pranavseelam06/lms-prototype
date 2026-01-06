@@ -42,10 +42,14 @@ def get_courses_for_teacher(teacher_id: int, db: Session = Depends(get_db)):
     return courses
 
 @router.post("/enroll/{student_id}", status_code=201)
-def enroll_student(course_name: str, student_id: int, db: Session = Depends(get_db)):
-    course = db.query(Course).filter(Course.name == course_name).first()
+def enroll_student(course_name: str, course_id: int, student_id: int, db: Session = Depends(get_db)):
+    course = db.query(Course).filter(Course.id == course_id).first()
+    
     if not course:
         raise HTTPException(status_code=404, detail="Course not found")
+    
+    if course.name != course_name:
+        raise HTTPException(status_code=400, detail="Course Id and name do not match")
 
     student = db.query(User).filter(User.id == student_id, User.role == "student").first()
     if not student:

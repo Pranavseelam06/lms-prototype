@@ -6,6 +6,7 @@ from models.course import Course
 from controllers.assignment import AssignmentCreate
 from models.submission import Submission
 from models.enrollment import Enrollment
+from datetime import date
 
 router = APIRouter(prefix="/courses", tags=["assignments"])
 
@@ -106,6 +107,7 @@ def get_student_assignments(student_id: int, db: Session = Depends(get_db)):
         db.query(Assignment)
         .join(Enrollment, Enrollment.course_id == Assignment.course_id)
         .filter(Enrollment.student_id == student_id)
+        .filter(Assignment.due_date >= date.today())
         .all()
     )
     return assignments

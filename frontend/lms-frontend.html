@@ -121,6 +121,7 @@
 
         <div class="section">
             <h3>Join Course</h3>
+            <input type="number" id="joinCourseId" placeholder="Course ID">
             <input type="text" id="joinCourseName" placeholder="Course Name">
             <button onclick="joinCourse()">Join</button>
         </div>
@@ -246,11 +247,13 @@
 
         // Student functions
         async function joinCourse() {
+            const courseId = document.getElementById('joinCourseId').value;
             const name = document.getElementById('joinCourseName').value;
-            if (!name) { alert('Enter course name'); return; }
+            if (!courseId || !name) { alert('Enter both Course ID and Name'); return; }
 
-            const res = await fetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}`, { method: 'POST' });
+            const res = await fetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}&course_id=${courseId}`, { method: 'POST' });
             if (res.ok) {
+                document.getElementById('joinCourseId').value = '';
                 document.getElementById('joinCourseName').value = '';
                 alert('Joined course!');
                 loadStudentData();
