@@ -12,6 +12,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(
         name=user.name,
+        password=user.password,
         role=user.role,
         grade_level=user.grade_level
     )
@@ -29,17 +30,19 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
     return user
 
 @router.post("/login")
-def login(user_id: int, name: str, role: str, db: Session = Depends(get_db)):
+def login(user_id: int, name: str, password: str, role: str, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == user_id).first()
 
     if not user:
         # Create new user
-        user = User(id=user_id, name=name, role=role)
+        user = User(id=user_id, name=name, password=password, role=role)
         db.add(user)
         db.commit()
         db.refresh(user)
     else:
-        # User exists, check name matches
+        # User exists, check credentials match
+        if user.password != password:
+            raise HTTPException(status_code=400, detail="Password is incorrect")
         if user.name != name:
             raise HTTPException(status_code=400, detail="User name does not match ID")
         if user.role != role:
