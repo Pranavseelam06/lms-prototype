@@ -93,10 +93,35 @@ Each submission is graded using **Google Gemini**.
 ---
 
 ## Running the Project
-#### Running the backend
-uvicorn main:app --reload
-#### Running the frontend
-Open the lms-frontend.html to access the grader
+
+---
+
+## Setup Instructions
+
+### 1. Clone the Repository
+```bash
+git clone <your-repo-url>
+cd lms
+```
+### Create a virtual environment
+```bash
+python -m venv venv
+source venv/bin/activate
+```
 ### Install dependencies
 ```bash
 pip install fastapi uvicorn sqlalchemy google-generativeai
+```
+This project uses Google Gemini for AI grading.
+### Set Up Gemini API Key
+Create an API key from Google AI Studio, then set it as an environment variable.
+```bash
+export GEMINI_API_KEY="your_api_key_here"
+```
+Restart your terminal after setting the key.
+### Running the backend
+```bash
+uvicorn main:app --reload
+```
+### Running the frontend
+Open the lms-frontend.html to access the grader
