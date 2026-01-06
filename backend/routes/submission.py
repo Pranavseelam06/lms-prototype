@@ -6,6 +6,7 @@ from models.user import User
 from models.submission import Submission
 from models.assignment import Assignment
 from controllers.submission import SubmissionCreate
+from ai import grade_submission
 
 
 router = APIRouter(prefix="/assignments", tags=["submissions"])
@@ -21,10 +22,11 @@ def create_submission( assignment_id: int, submission: SubmissionCreate, db: Ses
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
+    response = grade_submission(assignment.task,submission.content)
     db_submission = Submission(
         content=submission.content,
-        score=None,
-        ai_feedback=None,
+        score=response["score"],
+        ai_feedback= response["feedback"],
         assignment_id = assignment_id,
         student_id = submission.student_id,
     )
