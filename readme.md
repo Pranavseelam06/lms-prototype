@@ -26,6 +26,7 @@ This is a **prototype**.
 ### AI
 - **Google Gemini API**
 - AI-based grading and feedback generation
+- Creates Follow Up questions to help you learn and understand concepts better
 
 ---
 
