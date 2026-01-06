@@ -33,9 +33,8 @@ This is a **prototype**.
 ## Core Features
 
 ### Authentication (Prototype)
-- Login using **User ID + Role**
+- Login using **User ID + Role + Password**
 - Users are **auto-created** if they do not exist
-- No passwords (intentional for prototype simplicity)
 ---
 
 ### Teacher Features
@@ -58,6 +57,7 @@ This is a **prototype**.
   - Submission content
   - AI-generated score
   - AI-generated feedback
+  - Follow up question if neccessary
 
 ---
 
@@ -72,6 +72,7 @@ Each submission is graded using **Google Gemini**.
    - Short constructive feedback
 3. Response is enforced to be **strict JSON**
 4. Score and feedback are stored in the database
+5. Follow Up assignment created if score lower than 80. 
 
 ### AI Prompt Design
 - Model is instructed to behave like a teacher and provide individual feedback. 
