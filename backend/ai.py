@@ -18,7 +18,7 @@ Student submission:
 
 Give:
 1. A score out of 100
-2. Short constructive feedback
+2. Short constructive feedback and ways to improve
 
 Return ONLY valid JSON in this exact format:
 {{"Score": number, "Feedback": "text"}}

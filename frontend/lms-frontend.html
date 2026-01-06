@@ -3,37 +3,133 @@
 
 <head>
     <title>LMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
+            font-family: 'Inter', sans-serif;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f7fa;
+            min-height: 100vh;
+            color: #1a1a2e;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a1a2e;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+
+        h2 {
+            color: #1a1a2e;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e4e8;
+        }
+
+        h3 {
+            color: #1a1a2e;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .section {
-            border: 1px solid #ccc;
-            padding: 15px;
-            margin: 10px 0;
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 16px 0;
+            border: 1px solid #e0e4e8;
         }
 
         input,
         select,
-        button {
-            padding: 8px;
-            margin: 5px;
+        textarea {
+            padding: 10px 14px;
+            margin: 4px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.15s ease;
+            background: #fff;
+            color: #1a1a2e;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #9ca3af;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        input[type="date"] {
+            min-width: 180px;
+        }
+
+        select {
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        textarea {
+            width: calc(100% - 8px);
+            resize: vertical;
+            min-height: 100px;
         }
 
         button {
+            padding: 10px 20px;
+            margin: 4px;
             cursor: pointer;
-            background: #007bff;
+            background: #2563eb;
             color: white;
             border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:active {
+            transform: scale(0.98);
         }
 
         button:disabled {
-            background: #ccc;
+            background: #9ca3af;
             cursor: not-allowed;
+        }
+
+        h3 button {
+            padding: 6px 14px;
+            font-size: 13px;
         }
 
         .hidden {
@@ -43,20 +139,41 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 8px;
+        th {
+            background: #f9fafb;
+            color: #4b5563;
+            padding: 12px 14px;
             text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #e0e4e8;
+        }
+
+        td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: #f9fafb;
         }
 
         .spinner {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border: 2px solid #fff;
             border-top-color: transparent;
             border-radius: 50%;
@@ -70,6 +187,69 @@
                 transform: rotate(360deg);
             }
         }
+
+        #loginDiv {
+            max-width: 400px;
+            margin: 80px auto;
+        }
+
+        #loginDiv h2 {
+            text-align: center;
+            border: none;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        #loginDiv .subtitle {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        #loginDiv input,
+        #loginDiv select {
+            width: calc(100% - 8px);
+            margin: 6px 0;
+        }
+
+        #loginDiv button {
+            width: 100%;
+            margin-top: 16px;
+            padding: 12px;
+        }
+
+        .logout-btn {
+            background: #fff;
+            color: #dc2626;
+            border: 1px solid #dc2626;
+            margin-top: 16px;
+        }
+
+        .logout-btn:hover {
+            background: #fef2f2;
+        }
+
+        .panel-container {
+            background: #fff;
+            border-radius: 8px;
+            padding: 32px;
+            border: 1px solid #e0e4e8;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 24px;
+            color: #6b7280;
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -78,72 +258,83 @@
 
     <!-- Login -->
     <div id="loginDiv" class="section">
-        <h2>Login</h2>
+        <h2>Sign In</h2>
+        <p class="subtitle">Enter your credentials to continue</p>
         <input type="number" id="userId" placeholder="User ID">
         <input type="text" id="userName" placeholder="Your Name">
         <select id="userRole">
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
         </select>
-        <button onclick="login()">Login</button>
+        <button onclick="login()">Sign In</button>
     </div>
 
     <!-- Teacher Panel -->
     <div id="teacherPanel" class="hidden">
-        <h2>Teacher Panel - <span id="teacherName"></span></h2>
+        <div class="panel-container">
+            <h2>Teacher Panel — <span id="teacherName"></span></h2>
 
-        <div class="section">
-            <h3>Create Course</h3>
-            <input type="text" id="courseName" placeholder="Course Name">
-            <button onclick="createCourse()">Create</button>
+            <div class="section">
+                <h3>Create Course</h3>
+                <div class="form-row">
+                    <input type="text" id="courseName" placeholder="Course Name">
+                    <button onclick="createCourse()">Create</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Add Assignment</h3>
+                <div class="form-row">
+                    <select id="courseSelect"></select>
+                    <input type="text" id="assignmentTitle" placeholder="Assignment Title">
+                    <input type="text" id="assignmentTask" placeholder="Task instructions for student">
+                    <input type="date" id="dueDate">
+                    <button onclick="createAssignment()">Add Assignment</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>My Courses</h3>
+                <div id="teacherCourses"></div>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">Sign Out</button>
         </div>
-
-        <div class="section">
-            <h3>Add Assignment</h3>
-            <select id="courseSelect"></select>
-            <input type="text" id="assignmentTitle" placeholder="Assignment Title">
-            <input type="text" id="assignmentTask" placeholder="Task instructions for student">
-            <input type="date" id="dueDate">
-            <button onclick="createAssignment()">Add Assignment</button>
-        </div>
-
-        <div class="section">
-            <h3>My Courses</h3>
-            <div id="teacherCourses"></div>
-        </div>
-
-        <button onclick="logout()">Logout</button>
     </div>
 
     <!-- Student Panel -->
     <div id="studentPanel" class="hidden">
-        <h2>Student Panel - <span id="studentName"></span></h2>
+        <div class="panel-container">
+            <h2>Student Panel — <span id="studentName"></span></h2>
 
-        <div class="section">
-            <h3>Join Course</h3>
-            <input type="number" id="joinCourseId" placeholder="Course ID">
-            <input type="text" id="joinCourseName" placeholder="Course Name">
-            <button onclick="joinCourse()">Join</button>
+            <div class="section">
+                <h3>Join Course</h3>
+                <div class="form-row">
+                    <input type="number" id="joinCourseId" placeholder="Course ID">
+                    <input type="text" id="joinCourseName" placeholder="Course Name">
+                    <button onclick="joinCourse()">Join</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>My Assignments <button onclick="loadStudentData()">Refresh</button></h3>
+                <div id="studentAssignments"></div>
+            </div>
+
+            <div class="section">
+                <h3>Submit Assignment</h3>
+                <select id="assignmentSelect"></select><br>
+                <textarea id="submissionContent" placeholder="Your answer" rows="4"></textarea><br>
+                <button id="submitBtn" onclick="submitAssignment()">Submit</button>
+            </div>
+
+            <div class="section">
+                <h3>My Submissions</h3>
+                <div id="studentSubmissions"></div>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">Sign Out</button>
         </div>
-
-        <div class="section">
-            <h3>My Assignments <button onclick="loadStudentData()">Refresh</button></h3>
-            <div id="studentAssignments"></div>
-        </div>
-
-        <div class="section">
-            <h3>Submit Assignment</h3>
-            <select id="assignmentSelect"></select>
-            <textarea id="submissionContent" placeholder="Your answer" rows="4" cols="50"></textarea><br>
-            <button id="submitBtn" onclick="submitAssignment()">Submit</button>
-        </div>
-
-        <div class="section">
-            <h3>My Submissions</h3>
-            <div id="studentSubmissions"></div>
-        </div>
-
-        <button onclick="logout()">Logout</button>
     </div>
 
     <script>
@@ -209,11 +400,14 @@
             const res = await fetch(`${API}/courses/teacher/${user.id}`);
             const courses = await res.json();
 
-            // Update courses list
-            let html = '<table><tr><th>ID</th><th>Name</th></tr>';
-            courses.forEach(c => { html += `<tr><td>${c.id}</td><td>${c.name}</td></tr>`; });
-            html += '</table>';
-            document.getElementById('teacherCourses').innerHTML = html;
+            if (courses.length === 0) {
+                document.getElementById('teacherCourses').innerHTML = '<p class="empty-state">No courses yet. Create one above.</p>';
+            } else {
+                let html = '<table><tr><th>ID</th><th>Name</th></tr>';
+                courses.forEach(c => { html += `<tr><td>${c.id}</td><td>${c.name}</td></tr>`; });
+                html += '</table>';
+                document.getElementById('teacherCourses').innerHTML = html;
+            }
 
             // Update dropdown
             let options = '';
@@ -268,26 +462,35 @@
             const res = await fetch(`${API}/courses/students/${user.id}/assignments`);
             const assignments = await res.json();
 
-            let html = '<table><tr><th>ID</th><th>Title</th><th>Task</th><th>Due Date</th></tr>';
-            let options = '';
-            assignments.forEach(a => {
-                html += `<tr><td>${a.id}</td><td>${a.title}</td><td>${a.task}</td><td>${a.due_date}</td></tr>`;
-                options += `<option value="${a.id}">${a.title}</option>`;
-            });
-            html += '</table>';
-            document.getElementById('studentAssignments').innerHTML = html;
-            document.getElementById('assignmentSelect').innerHTML = options;
+            if (assignments.length === 0) {
+                document.getElementById('studentAssignments').innerHTML = '<p class="empty-state">No assignments yet. Join a course to see assignments.</p>';
+                document.getElementById('assignmentSelect').innerHTML = '';
+            } else {
+                let html = '<table><tr><th>ID</th><th>Title</th><th>Task</th><th>Due Date</th></tr>';
+                let options = '';
+                assignments.forEach(a => {
+                    html += `<tr><td>${a.id}</td><td>${a.title}</td><td>${a.task}</td><td>${a.due_date}</td></tr>`;
+                    options += `<option value="${a.id}">${a.title}</option>`;
+                });
+                html += '</table>';
+                document.getElementById('studentAssignments').innerHTML = html;
+                document.getElementById('assignmentSelect').innerHTML = options;
+            }
 
             // Load submissions
             const res2 = await fetch(`${API}/assignments/user/${user.id}/submissions`);
             const submissions = await res2.json();
 
-            let html2 = '<table><tr><th>Assignment ID</th><th>Content</th><th>Score</th><th>Feedback</th></tr>';
-            submissions.forEach(s => {
-                html2 += `<tr><td>${s.assignment_id}</td><td>${s.content}</td><td>${s.score || '-'}</td><td>${s.ai_feedback || '-'}</td></tr>`;
-            });
-            html2 += '</table>';
-            document.getElementById('studentSubmissions').innerHTML = html2;
+            if (submissions.length === 0) {
+                document.getElementById('studentSubmissions').innerHTML = '<p class="empty-state">No submissions yet.</p>';
+            } else {
+                let html2 = '<table><tr><th>Assignment ID</th><th>Content</th><th>Score</th><th>Feedback</th></tr>';
+                submissions.forEach(s => {
+                    html2 += `<tr><td>${s.assignment_id}</td><td>${s.content}</td><td>${s.score || '-'}</td><td>${s.ai_feedback || '-'}</td></tr>`;
+                });
+                html2 += '</table>';
+                document.getElementById('studentSubmissions').innerHTML = html2;
+            }
         }
 
         async function submitAssignment() {
