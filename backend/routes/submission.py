@@ -7,13 +7,16 @@ from models.submission import Submission
 from models.assignment import Assignment
 from controllers.submission import SubmissionCreate
 from ai import grade_submission
+from models.assignment import Assignment
 
 
 router = APIRouter(prefix="/assignments", tags=["submissions"])
 
 
+from datetime import date, timedelta
+
 @router.post("/{assignment_id}/submissions", status_code=201)
-def create_submission( assignment_id: int, submission: SubmissionCreate, db: Session = Depends(get_db)):
+def create_submission(assignment_id: int, submission: SubmissionCreate, db: Session = Depends(get_db)):
     assignment = db.query(Assignment).filter(Assignment.id == assignment_id).first()
     if not assignment:
         raise HTTPException(status_code=404, detail="Assignment not found")
@@ -22,18 +25,31 @@ def create_submission( assignment_id: int, submission: SubmissionCreate, db: Ses
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    response = grade_submission(assignment.task,submission.content)
+    response = grade_submission(assignment.task, submission.content)
+    
     db_submission = Submission(
         content=submission.content,
         score=response["Score"],
-        ai_feedback= response["Feedback"],
-        assignment_id = assignment_id,
-        student_id = submission.student_id,
+        ai_feedback=response["Feedback"],
+        assignment_id=assignment_id,
+        student_id=submission.student_id,
     )
     db.add(db_submission)
+    
+    if response["Follow Up"] != "none":
+        follow_up = Assignment(
+            title=assignment.title + " (Follow Up)",
+            task=response["Follow Up"],
+            due_date=date.today() + timedelta(days=1),
+            course_id=assignment.course_id,
+            student_id=submission.student_id,
+        )
+        db.add(follow_up)
+    
     db.commit()
     db.refresh(db_submission)
     return db_submission
+
 @router.get("/submissions/{submission_id}")
 def get_submission(submission_id: int, db: Session = Depends(get_db)):
     submission = db.query(Submission).filter(Submission.id == submission_id).first()

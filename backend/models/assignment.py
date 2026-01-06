@@ -11,6 +11,7 @@ class Assignment(Base):
     task = Column(String, nullable = False)
     due_date = Column(Date, nullable = False)
     course_id = Column(Integer, ForeignKey("courses.id"))
+    student_id = Column(Integer, nullable=True)
 
     course = relationship("Course", back_populates="assignments")
     submissions = relationship("Submission", back_populates="assignment")

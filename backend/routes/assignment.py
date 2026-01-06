@@ -12,7 +12,7 @@ router = APIRouter(prefix="/courses", tags=["assignments"])
 
 
 @router.post("/{course_id}/assignments", status_code=201)
-def create_assignment(
+def create_assignment_for_course(
     course_id: int,
     assignment: AssignmentCreate,
     db: Session = Depends(get_db)
@@ -57,6 +57,31 @@ def create_assignment(
 
     return {"message": "Assignment created", "assignment": db_assignment}
 
+
+@router.post("/create/assignments/student", status_code=201)
+def create_assignment_for_student (
+    course_id: int,
+    assignment: AssignmentCreate,
+    db: Session = Depends(get_db)
+):
+    course = db.query(Course).filter(Course.id == course_id).first()
+    if not course:
+        raise HTTPException(status_code=404, detail="Course not found")
+
+    db_assignment = Assignment(
+        title=assignment.title,
+        task=assignment.task,
+        due_date=assignment.due_date,
+        course_id=course.id,
+        student_id=assignment.student_id
+    )
+
+    db.add(db_assignment)
+    db.commit()
+    db.refresh(db_assignment)
+
+    return {"message": "Assignment created", "assignment": db_assignment}
+
 @router.get("/assignments/{assignment_id}")
 def get_assignment(assignment_id: int, db: Session = Depends(get_db)):
     assignment = db.query(Assignment).filter(Assignment.id == assignment_id).first()
@@ -82,19 +107,19 @@ def get_pending_assignments(
     student_id: int,
     db: Session = Depends(get_db)
 ):
-    # All assignments in course
+    
     assignments = db.query(Assignment).filter(
         Assignment.course_id == course_id
     ).all()
 
-    # Assignment IDs already submitted
+
     submitted_ids = db.query(Submission.assignment_id).filter(
         Submission.student_id == student_id
     ).all()
 
     submitted_ids = {a[0] for a in submitted_ids}
 
-    # Filter
+
     pending = [
         a for a in assignments if a.id not in submitted_ids
     ]
@@ -103,12 +128,26 @@ def get_pending_assignments(
 
 @router.get("/students/{student_id}/assignments")
 def get_student_assignments(student_id: int, db: Session = Depends(get_db)):
-    assignments = (
+    course_assignments = (
         db.query(Assignment)
         .join(Enrollment, Enrollment.course_id == Assignment.course_id)
         .filter(Enrollment.student_id == student_id)
+        .filter(Assignment.student_id == None)
         .filter(Assignment.due_date >= date.today())
         .all()
     )
-    return assignments
+
+    personal_assignments = (
+        db.query(Assignment)
+        .filter(Assignment.student_id == student_id)
+        .filter(Assignment.due_date >= date.today())
+        .all()
+    )
+
+    all_assignments = course_assignments + personal_assignments
+
+    
+    submitted_ids = {s[0] for s in db.query(Submission.assignment_id).filter(Submission.student_id == student_id).all()}
+    
+    return [a for a in all_assignments if a.id not in submitted_ids]
 

@@ -471,7 +471,9 @@
                 let html = '<table><tr><th>ID</th><th>Title</th><th>Task</th><th>Due Date</th></tr>';
                 let options = '';
                 assignments.forEach(a => {
-                    html += `<tr><td>${a.id}</td><td>${a.title}</td><td>${a.task}</td><td>${a.due_date}</td></tr>`;
+                    const isFollowUp = a.title.includes('(Follow Up)');
+                    const rowStyle = isFollowUp ? ' style="background: #fef3c7;"' : '';
+                    html += `<tr${rowStyle}><td>${a.id}</td><td>${a.title}</td><td>${a.task}</td><td>${a.due_date}</td></tr>`;
                     options += `<option value="${a.id}">${a.title}</option>`;
                 });
                 html += '</table>';
@@ -488,7 +490,8 @@
             } else {
                 let html2 = '<table><tr><th>Assignment ID</th><th>Content</th><th>Score</th><th>Feedback</th></tr>';
                 submissions.forEach(s => {
-                    html2 += `<tr><td>${s.assignment_id}</td><td>${s.content}</td><td>${s.score || '-'}</td><td>${s.ai_feedback || '-'}</td></tr>`;
+                    const scoreColor = s.score >= 80 ? 'color: #16a34a; font-weight: 600;' : 'color: #dc2626; font-weight: 600;';
+                    html2 += `<tr><td>${s.assignment_id}</td><td>${s.content}</td><td style="${scoreColor}">${s.score || '-'}</td><td>${s.ai_feedback || '-'}</td></tr>`;
                 });
                 html2 += '</table>';
                 document.getElementById('studentSubmissions').innerHTML = html2;
@@ -514,8 +517,14 @@
                     body: JSON.stringify({ content: content, assignment_id: parseInt(assignmentId), student_id: user.id })
                 });
                 if (res.ok) {
+                    const result = await res.json();
                     document.getElementById('submissionContent').value = '';
-                    alert('Submitted and graded!');
+
+                    if (result.score >= 80) {
+                        alert(`Great job! You scored ${result.score}/100. Assignment complete!`);
+                    } else {
+                        alert(`You scored ${result.score}/100. A follow-up assignment has been created to help you improve. Check your assignments!`);
+                    }
                     loadStudentData();
                 } else {
                     const err = await res.json();
