@@ -1,6 +1,7 @@
 import os
 import json
 from google import genai
+from google.genai import types
 
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
@@ -24,8 +25,11 @@ Return ONLY valid JSON in this exact format:
 """
 
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=prompt
+        model="gemini-2.5-flash",
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            response_mime_type="application/json"
+        )
     )
 
     text = response.text

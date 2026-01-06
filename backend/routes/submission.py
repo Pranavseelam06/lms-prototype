@@ -25,8 +25,8 @@ def create_submission( assignment_id: int, submission: SubmissionCreate, db: Ses
     response = grade_submission(assignment.task,submission.content)
     db_submission = Submission(
         content=submission.content,
-        score=response["score"],
-        ai_feedback= response["feedback"],
+        score=response["Score"],
+        ai_feedback= response["Feedback"],
         assignment_id = assignment_id,
         student_id = submission.student_id,
     )
