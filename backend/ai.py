@@ -1,10 +1,9 @@
 import os
-import google.generativeai as genai
 import json
+from google import genai
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-model = genai.GenerativeModel("gemini-1.5-pro")
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 def grade_submission(task: str, student_answer: str):
     prompt = f"""
@@ -21,16 +20,21 @@ Give:
 2. Short constructive feedback
 
 Return ONLY valid JSON in this exact format:
-{{"score": number, "feedback": "text"}}
+{{"Score": number, "Feedback": "text"}}
 """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt
+    )
+
+    text = response.text
 
     try:
-        return json.loads(response.text)
+        return json.loads(text)
     except json.JSONDecodeError:
         return {
             "score": None,
             "feedback": "Model did not return valid JSON.",
-            "raw_response": response.text
+            "raw_response": text
         }
