@@ -6,23 +6,20 @@ from models.user import User
 router = APIRouter(tags=["auth"])
 
 @router.post("/login")
-def login(user_id: int, role: str, db: Session = Depends(get_db)):
-    # validate role
-    if role not in ["student", "teacher"]:
-        raise HTTPException(status_code=400, detail="Invalid role")
-
-    # check if user exists
+def login(user_id: int, name: str, role: str, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == user_id).first()
 
-    # if not, create user
     if not user:
-        user = User(
-            id=user_id,
-            name=f"User {user_id}",
-            role=role
-        )
+        # Create new user
+        user = User(id=user_id, name=name, role=role)
         db.add(user)
         db.commit()
         db.refresh(user)
+    else:
+        # User exists, check name matches
+        if user.name != name:
+            raise HTTPException(status_code=400, detail="User name does not match ID")
+        if user.role != role:
+            raise HTTPException(status_code=400, detail="User role does not match ID")
 
     return user

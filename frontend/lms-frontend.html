@@ -156,18 +156,22 @@
 
             if (!id || !name) { alert('Enter ID and Name'); return; }
 
-            const res = await fetch(`${API}/login?user_id=${id}&role=${role}`, { method: 'POST' });
+            const res = await fetch(`${API}/login?user_id=${id}&name=${encodeURIComponent(name)}&role=${role}`, { method: 'POST' });
+            if (!res.ok) {
+                const err = await res.json();
+                alert('Error: ' + err.detail);
+                return;
+            }
             user = await res.json();
-            user.name = name;
 
             document.getElementById('loginDiv').classList.add('hidden');
 
             if (role === 'teacher') {
-                document.getElementById('teacherName').textContent = name;
+                document.getElementById('teacherName').textContent = user.name;
                 document.getElementById('teacherPanel').classList.remove('hidden');
                 loadTeacherCourses();
             } else {
-                document.getElementById('studentName').textContent = name;
+                document.getElementById('studentName').textContent = user.name;
                 document.getElementById('studentPanel').classList.remove('hidden');
                 loadStudentData();
             }
