@@ -106,6 +106,7 @@ cd lms
 ```
 ### Create a virtual environment
 ```bash
+cd backend
 python -m venv venv
 source venv/bin/activate
 ```
