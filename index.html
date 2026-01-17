@@ -951,6 +951,8 @@
             const name = document.getElementById('courseName').value;
             if (!name) { alert('Enter course name'); return; }
 
+            console.log('Creating course:', { name, teacherId: user.id });
+
             const res = await fetch(`${API}/courses/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -958,11 +960,14 @@
             });
 
             if (res.ok) {
+                const result = await res.json();
+                console.log('Course created:', result);
                 document.getElementById('courseName').value = '';
-                alert('Course created!');
+                alert('Course created! ID: ' + result.course.id);
                 loadTeacherCourses();
             } else {
                 const err = await res.json();
+                console.error('Error creating course:', err);
                 alert('Error: ' + err.detail);
             }
         }
@@ -999,6 +1004,8 @@
             if (!courseId) { alert('Create a course first'); return; }
             if (!title || !task || !dueDate) { alert('Fill all fields'); return; }
 
+            console.log('Creating assignment:', { courseId, title, task, dueDate });
+
             const res = await fetch(`${API}/courses/${courseId}/assignments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1006,20 +1013,25 @@
             });
 
             if (res.ok) {
+                const result = await res.json();
+                console.log('Assignment created:', result);
                 document.getElementById('assignmentTitle').value = '';
                 document.getElementById('assignmentTask').value = '';
                 document.getElementById('dueDate').value = '';
-                alert('Assignment created!');
+                alert('Assignment created! ID: ' + result.id);
             } else {
                 const err = await res.json();
+                console.error('Error creating assignment:', err);
                 alert('Error: ' + err.detail);
             }
         }
 
         // ========== STUDENT - COURSES ==========
         async function loadStudentCourses() {
+            console.log('Loading courses for student:', user.id);
             const res = await fetch(`${API}/courses/student/${user.id}/courses`);
             studentCourses = await res.json();
+            console.log('Student courses:', studentCourses);
             renderSidebar();
         }
 
@@ -1055,29 +1067,44 @@
 
         async function loadCourseData() {
             // Load assignments for this course
-            const res = await fetch(`${API}/courses/${currentCourse.id}/assignments/pending/${user.id}`);
-            const assignments = await res.json();
+            try {
+                console.log('Loading assignments for course:', currentCourse.id, 'student:', user.id);
+                const res = await fetch(`${API}/courses/${currentCourse.id}/assignments/pending/${user.id}`);
 
-            if (assignments.length === 0) {
-                document.getElementById('courseAssignments').innerHTML = '<p class="empty-state">No pending assignments.</p>';
-                document.getElementById('assignmentSelect').innerHTML = '<option value="">No assignments</option>';
-            } else {
-                let html = '<table><tr><th>ID</th><th>Title</th><th>Task</th><th>Due Date</th></tr>';
-                let options = '';
-                assignments.forEach(a => {
-                    const isFollowUp = a.title.includes('(Follow Up)');
-                    const rowStyle = isFollowUp ? ' style="background: rgba(234, 179, 8, 0.1);"' : '';
-                    html += `<tr${rowStyle}>
-                        <td>${a.id}</td>
-                        <td>${a.title}</td>
-                        <td>${a.task}</td>
-                        <td>${a.due_date}</td>
-                    </tr>`;
-                    options += `<option value="${a.id}">${a.title}</option>`;
-                });
-                html += '</table>';
-                document.getElementById('courseAssignments').innerHTML = html;
-                document.getElementById('assignmentSelect').innerHTML = options;
+                if (!res.ok) {
+                    const err = await res.json();
+                    console.error('Error loading assignments:', err);
+                    document.getElementById('courseAssignments').innerHTML = '<p class="empty-state">Error loading assignments.</p>';
+                    return;
+                }
+
+                const assignments = await res.json();
+                console.log('Assignments loaded:', assignments);
+
+                if (assignments.length === 0) {
+                    document.getElementById('courseAssignments').innerHTML = '<p class="empty-state">No pending assignments.</p>';
+                    document.getElementById('assignmentSelect').innerHTML = '<option value="">No assignments</option>';
+                } else {
+                    let html = '<table><tr><th>ID</th><th>Title</th><th>Task</th><th>Due Date</th></tr>';
+                    let options = '';
+                    assignments.forEach(a => {
+                        const isFollowUp = a.title.includes('(Follow Up)');
+                        const rowStyle = isFollowUp ? ' style="background: rgba(234, 179, 8, 0.1);"' : '';
+                        html += `<tr${rowStyle}>
+                            <td>${a.id}</td>
+                            <td>${a.title}</td>
+                            <td>${a.task}</td>
+                            <td>${a.due_date}</td>
+                        </tr>`;
+                        options += `<option value="${a.id}">${a.title}</option>`;
+                    });
+                    html += '</table>';
+                    document.getElementById('courseAssignments').innerHTML = html;
+                    document.getElementById('assignmentSelect').innerHTML = options;
+                }
+            } catch (error) {
+                console.error('Network error loading assignments:', error);
+                document.getElementById('courseAssignments').innerHTML = '<p class="empty-state">Network error. Please try again.</p>';
             }
 
             // Load submissions
@@ -1162,14 +1189,19 @@
                 return;
             }
 
+            console.log('Joining course:', { courseId, name, studentId: user.id });
+
             const res = await fetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}&course_id=${courseId}`, { method: 'POST' });
 
             if (res.ok) {
+                const result = await res.json();
+                console.log('Enrolled:', result);
                 closeJoinModal();
                 alert('Joined course!');
                 loadStudentCourses();
             } else {
                 const err = await res.json();
+                console.error('Error joining course:', err);
                 alert('Error: ' + err.detail);
             }
         }
