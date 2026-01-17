@@ -26,3 +26,7 @@ app.include_router(auth.router)
 app.include_router(course.router)
 app.include_router(assignment.router)
 app.include_router(submission.router)
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
