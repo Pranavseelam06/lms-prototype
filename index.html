@@ -1078,8 +1078,12 @@
                     return;
                 }
 
-                const assignments = await res.json();
-                console.log('Assignments loaded:', assignments);
+                const allAssignments = await res.json();
+                console.log('All assignments from API:', allAssignments);
+
+                // Filter: only show assignments for everyone (student_id is null) OR for this specific student
+                const assignments = allAssignments.filter(a => a.student_id === null || a.student_id === user.id);
+                console.log('Filtered assignments for this student:', assignments);
 
                 if (assignments.length === 0) {
                     document.getElementById('courseAssignments').innerHTML = '<p class="empty-state">No pending assignments.</p>';
