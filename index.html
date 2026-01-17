@@ -13,165 +13,408 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background: #f8f8f6;
+            background: #0f0f0f;
             min-height: 100vh;
-            color: #1a1a1a;
+            color: #e5e5e5;
             -webkit-font-smoothing: antialiased;
         }
 
-        h1 {
-            text-align: center;
-            color: #888;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 32px;
+        .hidden {
+            display: none !important;
         }
 
-        h2 {
-            color: #1a1a1a;
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        h3 {
-            color: #666;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            margin-bottom: 12px;
+        /* ========== HOMEPAGE ========== */
+        .homepage {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
+        }
+
+        .homepage-title {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
+            color: #525252;
+            margin-bottom: 16px;
         }
 
-        .section {
-            background: #fff;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 12px 0;
-            border: 1px solid #e5e5e3;
+        .homepage-heading {
+            font-size: 2.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fafafa;
         }
 
-        input,
-        select,
-        textarea {
-            padding: 10px 12px;
-            margin: 4px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            font-family: inherit;
-            transition: border-color 0.15s ease;
-            background: #fff;
-            color: #1a1a1a;
+        .homepage-subheading {
+            color: #737373;
+            font-size: 15px;
+            margin-bottom: 56px;
         }
 
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #aaa;
+        .role-selection {
+            display: flex;
+            gap: 20px;
         }
 
-        input::placeholder,
-        textarea::placeholder {
-            color: #aaa;
-        }
-
-        input[type="number"],
-        input[type="text"],
-        input[type="date"] {
-            min-width: 180px;
-        }
-
-        select {
+        .role-card {
+            background: #1a1a1a;
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 48px 56px;
             cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
             min-width: 200px;
         }
 
-        textarea {
-            width: calc(100% - 8px);
-            resize: vertical;
-            min-height: 100px;
+        .role-card:hover {
+            border-color: #404040;
+            background: #1f1f1f;
+            transform: translateY(-2px);
         }
 
-        button {
-            padding: 10px 18px;
-            margin: 4px;
-            cursor: pointer;
-            background: #2c2c2c;
-            color: white;
+        .role-icon {
+            margin-bottom: 20px;
+        }
+
+        .role-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: #a3a3a3;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .role-card:hover .role-icon svg {
+            stroke: #e5e5e5;
+        }
+
+        .role-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fafafa;
+        }
+
+        /* ========== LOGIN ========== */
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
+        }
+
+        .login-box {
+            background: #1a1a1a;
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 36px;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .login-back {
+            background: transparent;
             border: none;
-            border-radius: 4px;
+            color: #737373;
+            font-size: 13px;
+            cursor: pointer;
+            margin-bottom: 28px;
+            padding: 0;
+            font-family: inherit;
+            transition: color 0.15s ease;
+        }
+
+        .login-back:hover {
+            color: #a3a3a3;
+        }
+
+        .login-back::before {
+            content: "← ";
+        }
+
+        .login-title {
+            font-size: 1.375rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #fafafa;
+        }
+
+        .login-subtitle {
+            color: #737373;
             font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .form-field {
+            margin-bottom: 16px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 12px;
             font-weight: 500;
+            color: #a3a3a3;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            background: #0f0f0f;
+            color: #e5e5e5;
+            transition: border-color 0.15s ease;
+        }
+
+        .form-field input::placeholder {
+            color: #525252;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: #525252;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            background: #fafafa;
+            color: #0f0f0f;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
             font-family: inherit;
             transition: background 0.15s ease;
         }
 
-        button:hover {
+        .login-btn:hover {
+            background: #e5e5e5;
+        }
+
+        /* ========== STUDENT DASHBOARD ========== */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #141414;
+            border-right: 1px solid #262626;
+            padding: 24px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid #262626;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-logo {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #525252;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-user {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fafafa;
+        }
+
+        .sidebar-section-title {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #525252;
+            padding: 20px 24px 12px;
+        }
+
+        .sidebar-course {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #a3a3a3;
+            border-left: 2px solid transparent;
+            transition: all 0.1s ease;
+            margin: 2px 0;
+        }
+
+        .sidebar-course:hover {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+
+        .sidebar-course.active {
+            background: #1f1f1f;
+            border-left-color: #fafafa;
+            color: #fafafa;
+            font-weight: 500;
+        }
+
+        .sidebar-add-btn {
+            margin: 20px 24px;
+            padding: 12px 16px;
+            background: transparent;
+            color: #737373;
+            border: 1px dashed #333;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+
+        .sidebar-add-btn:hover {
+            border-color: #525252;
+            color: #a3a3a3;
             background: #1a1a1a;
         }
 
-        button:active {
-            transform: translateY(1px);
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 24px;
+            border-top: 1px solid #262626;
         }
 
-        button:disabled {
-            background: #999;
-            cursor: not-allowed;
-        }
-
-        h3 button {
-            padding: 5px 12px;
-            font-size: 12px;
+        .logout-btn {
+            width: 100%;
+            padding: 12px;
             background: transparent;
-            color: #666;
-            border: 1px solid #ddd;
+            color: #ef4444;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s ease;
         }
 
-        h3 button:hover {
-            background: #f5f5f5;
-            color: #1a1a1a;
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
         }
 
-        .hidden {
-            display: none;
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px 48px;
+            overflow-y: auto;
+            background: #0f0f0f;
         }
 
+        .main-header {
+            margin-bottom: 36px;
+        }
+
+        .main-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #fafafa;
+        }
+
+        .main-subtitle {
+            color: #525252;
+            font-size: 13px;
+            font-family: monospace;
+        }
+
+        /* Welcome state */
+        .welcome-state {
+            text-align: center;
+            padding: 100px 40px;
+            color: #525252;
+        }
+
+        .welcome-state h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #a3a3a3;
+            margin-bottom: 10px;
+        }
+
+        .welcome-state p {
+            font-size: 14px;
+            margin-bottom: 24px;
+            color: #525252;
+        }
+
+        /* Section */
+        .section {
+            background: #141414;
+            border: 1px solid #262626;
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #525252;
+            margin-bottom: 20px;
+        }
+
+        /* Tables */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 12px;
         }
 
         th {
-            background: transparent;
-            color: #888;
-            padding: 10px 12px;
             text-align: left;
-            font-weight: 500;
-            font-size: 11px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px solid #e5e5e3;
+            color: #525252;
+            padding: 12px 16px;
+            border-bottom: 1px solid #262626;
+            background: #1a1a1a;
+        }
+
+        th:first-child {
+            border-radius: 6px 0 0 0;
+        }
+
+        th:last-child {
+            border-radius: 0 6px 0 0;
         }
 
         td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #f0f0ee;
-            color: #333;
-            font-size: 14px;
+            padding: 14px 16px;
+            font-size: 13px;
+            color: #a3a3a3;
+            border-bottom: 1px solid #1f1f1f;
         }
 
         tr:last-child td {
@@ -179,15 +422,68 @@
         }
 
         tr:hover td {
-            background: #fafaf8;
+            background: #1a1a1a;
+        }
+
+        /* Form elements */
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            background: #0f0f0f;
+            color: #e5e5e5;
+            transition: border-color 0.15s ease;
+        }
+
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #525252;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        textarea::placeholder {
+            color: #525252;
+        }
+
+        .submit-btn {
+            padding: 12px 24px;
+            background: #fafafa;
+            color: #0f0f0f;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.15s ease;
+        }
+
+        .submit-btn:hover {
+            background: #e5e5e5;
+        }
+
+        .submit-btn:disabled {
+            background: #333;
+            color: #525252;
+            cursor: not-allowed;
         }
 
         .spinner {
             display: inline-block;
             width: 14px;
             height: 14px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #fff;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-top-color: #0f0f0f;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-right: 8px;
@@ -200,96 +496,339 @@
             }
         }
 
-        #loginDiv {
-            max-width: 360px;
-            margin: 80px auto;
-        }
-
-        #loginDiv h2 {
+        .empty-state {
             text-align: center;
-            border: none;
-            font-size: 1.25rem;
-            margin-bottom: 6px;
-        }
-
-        #loginDiv .subtitle {
-            text-align: center;
-            color: #888;
+            padding: 32px;
+            color: #525252;
             font-size: 14px;
-            margin-bottom: 24px;
         }
 
-        #loginDiv input,
-        #loginDiv select {
-            width: calc(100% - 8px);
-            margin: 5px 0;
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            backdrop-filter: blur(4px);
         }
 
-        #loginDiv button {
-            width: 100%;
-            margin-top: 16px;
-            padding: 12px;
-        }
-
-        .logout-btn {
-            background: #fff;
-            color: #b54a4a;
-            border: 1px solid #ddd;
-            margin-top: 20px;
-        }
-
-        .logout-btn:hover {
-            background: #fafafa;
-            border-color: #ccc;
-        }
-
-        .panel-container {
-            background: #fff;
-            border-radius: 6px;
+        .modal {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
             padding: 28px;
-            border: 1px solid #e5e5e3;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px;
+        }
+
+        .modal h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fafafa;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            background: #0f0f0f;
+            color: #e5e5e5;
+            font-family: inherit;
+        }
+
+        .modal input::placeholder {
+            color: #525252;
+        }
+
+        .modal input:focus {
+            outline: none;
+            border-color: #525252;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        .modal-cancel {
+            padding: 12px 20px;
+            background: transparent;
+            color: #a3a3a3;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+
+        .modal-cancel:hover {
+            background: #262626;
+            color: #e5e5e5;
+        }
+
+        .modal-confirm {
+            padding: 12px 20px;
+            background: #fafafa;
+            color: #0f0f0f;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.15s ease;
+        }
+
+        .modal-confirm:hover {
+            background: #e5e5e5;
+        }
+
+        /* ========== TEACHER DASHBOARD ========== */
+        .teacher-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .teacher-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .teacher-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fafafa;
+        }
+
+        .teacher-user {
+            font-size: 13px;
+            color: #a3a3a3;
+            background: #1a1a1a;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #262626;
         }
 
         .form-row {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 4px;
+            gap: 10px;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 24px;
-            color: #888;
+        .form-row input,
+        .form-row select {
+            padding: 12px 14px;
+            border: 1px solid #333;
+            border-radius: 8px;
             font-size: 14px;
+            font-family: inherit;
+            background: #0f0f0f;
+            color: #e5e5e5;
+        }
+
+        .form-row input::placeholder {
+            color: #525252;
+        }
+
+        .form-row input:focus,
+        .form-row select:focus {
+            outline: none;
+            border-color: #525252;
+        }
+
+        .form-row button {
+            padding: 12px 20px;
+            background: #fafafa;
+            color: #0f0f0f;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.15s ease;
+        }
+
+        .form-row button:hover {
+            background: #e5e5e5;
+        }
+
+        .teacher-logout {
+            width: 100%;
+            padding: 14px;
+            margin-top: 32px;
+            background: transparent;
+            color: #ef4444;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+
+        .teacher-logout:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #404040;
         }
     </style>
 </head>
 
 <body>
-    <h1>Learning Management System</h1>
 
-    <!-- Login -->
-    <div id="loginDiv" class="section">
-        <h2>Sign In</h2>
-        <p class="subtitle">Enter your credentials to continue</p>
-        <input type="number" id="userId" placeholder="User ID">
-        <input type="text" id="userName" placeholder="Your Name">
-        <input type="password" id="userPassword" placeholder="Password">
-        <select id="userRole">
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-        </select>
-        <button onclick="login()">Sign In</button>
+    <!-- ========== HOMEPAGE ========== -->
+    <div id="homePage" class="homepage">
+        <div class="homepage-title">Learning Management System</div>
+        <h1 class="homepage-heading">Welcome</h1>
+        <p class="homepage-subheading">Select your role to continue</p>
+        <div class="role-selection">
+            <div class="role-card" onclick="selectRole('student')">
+                <div class="role-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path
+                            d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                        <path
+                            d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                    </svg>
+                </div>
+                <div class="role-name">Student</div>
+            </div>
+            <div class="role-card" onclick="selectRole('teacher')">
+                <div class="role-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <path d="M9 14l2 2 4-4" />
+                    </svg>
+                </div>
+                <div class="role-name">Teacher</div>
+            </div>
+        </div>
     </div>
 
-    <!-- Teacher Panel -->
-    <div id="teacherPanel" class="hidden">
-        <div class="panel-container">
-            <h2>Teacher Panel — <span id="teacherName"></span></h2>
+    <!-- ========== LOGIN PAGE ========== -->
+    <div id="loginPage" class="login-page hidden">
+        <div class="login-box">
+            <button class="login-back" onclick="backToHome()">Back</button>
+            <h2 class="login-title" id="loginTitle">Sign In</h2>
+            <p class="login-subtitle" id="loginSubtitle">Enter your credentials</p>
+            <div class="form-field">
+                <label>User ID</label>
+                <input type="number" id="userId" placeholder="123">
+            </div>
+            <div class="form-field">
+                <label>Name</label>
+                <input type="text" id="userName" placeholder="Your name">
+            </div>
+            <div class="form-field">
+                <label>Password</label>
+                <input type="password" id="userPassword" placeholder="••••••••">
+            </div>
+            <button class="login-btn" onclick="login()">Sign In</button>
+        </div>
+    </div>
+
+    <!-- ========== STUDENT DASHBOARD ========== -->
+    <div id="studentDashboard" class="dashboard hidden">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">LMS</div>
+                <div class="sidebar-user" id="studentName"></div>
+            </div>
+
+            <div class="sidebar-section-title">My Courses</div>
+            <div id="sidebarCourses"></div>
+
+            <button class="sidebar-add-btn" onclick="openJoinModal()">+ Add Course</button>
+
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">Sign Out</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <!-- Welcome state (no course selected) -->
+            <div id="welcomeState" class="welcome-state">
+                <h3>Welcome to your courses</h3>
+                <p>Select a course from the sidebar or add a new one to get started.</p>
+            </div>
+
+            <!-- Course content (when a course is selected) -->
+            <div id="courseContent" class="hidden">
+                <div class="main-header">
+                    <h1 class="main-title" id="currentCourseName"></h1>
+                    <p class="main-subtitle" id="currentCourseId"></p>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Assignments</div>
+                    <div id="courseAssignments"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Submit Assignment</div>
+                    <select id="assignmentSelect"></select>
+                    <textarea id="submissionContent" placeholder="Write your answer here..."></textarea>
+                    <button class="submit-btn" id="submitBtn" onclick="submitAssignment()">Submit</button>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">My Submissions</div>
+                    <div id="courseSubmissions"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========== TEACHER DASHBOARD ========== -->
+    <div id="teacherDashboard" class="hidden">
+        <div class="teacher-container">
+            <div class="teacher-header">
+                <h1 class="teacher-title">Teacher Dashboard</h1>
+                <span class="teacher-user" id="teacherName"></span>
+            </div>
 
             <div class="section">
-                <h3>Create Course</h3>
+                <div class="section-title">Create Course</div>
                 <div class="form-row">
                     <input type="text" id="courseName" placeholder="Course Name">
                     <button onclick="createCourse()">Create</button>
@@ -297,101 +836,117 @@
             </div>
 
             <div class="section">
-                <h3>Add Assignment</h3>
+                <div class="section-title">Add Assignment</div>
                 <div class="form-row">
                     <select id="courseSelect"></select>
                     <input type="text" id="assignmentTitle" placeholder="Assignment Title">
-                    <input type="text" id="assignmentTask" placeholder="Task instructions for student">
+                    <input type="text" id="assignmentTask" placeholder="Task instructions">
                     <input type="date" id="dueDate">
-                    <button onclick="createAssignment()">Add Assignment</button>
+                    <button onclick="createAssignment()">Add</button>
                 </div>
             </div>
 
             <div class="section">
-                <h3>My Courses</h3>
+                <div class="section-title">My Courses</div>
                 <div id="teacherCourses"></div>
             </div>
 
-            <button class="logout-btn" onclick="logout()">Sign Out</button>
+            <button class="teacher-logout" onclick="logout()">Sign Out</button>
         </div>
     </div>
 
-    <!-- Student Panel -->
-    <div id="studentPanel" class="hidden">
-        <div class="panel-container">
-            <h2>Student Panel — <span id="studentName"></span></h2>
-
-            <div class="section">
-                <h3>Join Course</h3>
-                <div class="form-row">
-                    <input type="number" id="joinCourseId" placeholder="Course ID">
-                    <input type="text" id="joinCourseName" placeholder="Course Name">
-                    <button onclick="joinCourse()">Join</button>
-                </div>
+    <!-- ========== JOIN COURSE MODAL ========== -->
+    <div id="joinModal" class="modal-overlay hidden" onclick="closeJoinModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <h3>Join a Course</h3>
+            <input type="number" id="joinCourseId" placeholder="Course ID">
+            <input type="text" id="joinCourseName" placeholder="Course Name">
+            <div class="modal-actions">
+                <button class="modal-cancel" onclick="closeJoinModal()">Cancel</button>
+                <button class="modal-confirm" onclick="joinCourse()">Join</button>
             </div>
-
-            <div class="section">
-                <h3>My Assignments <button onclick="loadStudentData()">Refresh</button></h3>
-                <div id="studentAssignments"></div>
-            </div>
-
-            <div class="section">
-                <h3>Submit Assignment</h3>
-                <select id="assignmentSelect"></select><br>
-                <textarea id="submissionContent" placeholder="Your answer" rows="4"></textarea><br>
-                <button id="submitBtn" onclick="submitAssignment()">Submit</button>
-            </div>
-
-            <div class="section">
-                <h3>My Submissions</h3>
-                <div id="studentSubmissions"></div>
-            </div>
-
-            <button class="logout-btn" onclick="logout()">Sign Out</button>
         </div>
     </div>
 
     <script>
         const API = 'https://lms-prototype-1.onrender.com';
         let user = null;
+        let selectedRole = null;
+        let currentCourse = null;
+        let studentCourses = [];
 
+        // ========== NAVIGATION ==========
+        function selectRole(role) {
+            selectedRole = role;
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+
+            if (role === 'student') {
+                document.getElementById('loginTitle').textContent = 'Student Sign In';
+                document.getElementById('loginSubtitle').textContent = 'Access your courses and assignments';
+            } else {
+                document.getElementById('loginTitle').textContent = 'Teacher Sign In';
+                document.getElementById('loginSubtitle').textContent = 'Manage your courses and students';
+            }
+        }
+
+        function backToHome() {
+            selectedRole = null;
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('homePage').classList.remove('hidden');
+            // Clear inputs
+            document.getElementById('userId').value = '';
+            document.getElementById('userName').value = '';
+            document.getElementById('userPassword').value = '';
+        }
+
+        function logout() {
+            user = null;
+            currentCourse = null;
+            selectedRole = null;
+            document.getElementById('studentDashboard').classList.add('hidden');
+            document.getElementById('teacherDashboard').classList.add('hidden');
+            document.getElementById('homePage').classList.remove('hidden');
+            // Clear inputs
+            document.getElementById('userId').value = '';
+            document.getElementById('userName').value = '';
+            document.getElementById('userPassword').value = '';
+        }
+
+        // ========== AUTH ==========
         async function login() {
             const id = document.getElementById('userId').value;
             const name = document.getElementById('userName').value;
             const password = document.getElementById('userPassword').value;
-            const role = document.getElementById('userRole').value;
 
-            if (!id || !name || !password) { alert('Enter ID, Name and Password'); return; }
+            if (!id || !name || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
 
-            const res = await fetch(`${API}/users/login?user_id=${id}&name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}&role=${role}`, { method: 'POST' });
+            const res = await fetch(`${API}/users/login?user_id=${id}&name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}&role=${selectedRole}`, { method: 'POST' });
+
             if (!res.ok) {
                 const err = await res.json();
                 alert('Error: ' + err.detail);
                 return;
             }
+
             user = await res.json();
+            document.getElementById('loginPage').classList.add('hidden');
 
-            document.getElementById('loginDiv').classList.add('hidden');
-
-            if (role === 'teacher') {
+            if (selectedRole === 'teacher') {
                 document.getElementById('teacherName').textContent = user.name;
-                document.getElementById('teacherPanel').classList.remove('hidden');
+                document.getElementById('teacherDashboard').classList.remove('hidden');
                 loadTeacherCourses();
             } else {
                 document.getElementById('studentName').textContent = user.name;
-                document.getElementById('studentPanel').classList.remove('hidden');
-                loadStudentData();
+                document.getElementById('studentDashboard').classList.remove('hidden');
+                loadStudentCourses();
             }
         }
 
-        function logout() {
-            user = null;
-            document.getElementById('teacherPanel').classList.add('hidden');
-            document.getElementById('studentPanel').classList.add('hidden');
-            document.getElementById('loginDiv').classList.remove('hidden');
-        }
-
-        // Teacher functions
+        // ========== TEACHER ==========
         async function createCourse() {
             const name = document.getElementById('courseName').value;
             if (!name) { alert('Enter course name'); return; }
@@ -401,6 +956,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: name, teacher_id: user.id })
             });
+
             if (res.ok) {
                 document.getElementById('courseName').value = '';
                 alert('Course created!');
@@ -417,17 +973,21 @@
 
             if (courses.length === 0) {
                 document.getElementById('teacherCourses').innerHTML = '<p class="empty-state">No courses yet. Create one above.</p>';
+                document.getElementById('courseSelect').innerHTML = '';
             } else {
                 let html = '<table><tr><th>ID</th><th>Name</th></tr>';
-                courses.forEach(c => { html += `<tr><td>${c.id}</td><td>${c.name}</td></tr>`; });
+                courses.forEach(c => {
+                    html += `<tr><td>${c.id}</td><td>${c.name}</td></tr>`;
+                });
                 html += '</table>';
                 document.getElementById('teacherCourses').innerHTML = html;
-            }
 
-            // Update dropdown
-            let options = '';
-            courses.forEach(c => { options += `<option value="${c.id}">${c.name}</option>`; });
-            document.getElementById('courseSelect').innerHTML = options;
+                let options = '';
+                courses.forEach(c => {
+                    options += `<option value="${c.id}">${c.name}</option>`;
+                });
+                document.getElementById('courseSelect').innerHTML = options;
+            }
         }
 
         async function createAssignment() {
@@ -444,9 +1004,11 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title: title, task: task, due_date: dueDate, course_id: parseInt(courseId) })
             });
+
             if (res.ok) {
                 document.getElementById('assignmentTitle').value = '';
                 document.getElementById('assignmentTask').value = '';
+                document.getElementById('dueDate').value = '';
                 alert('Assignment created!');
             } else {
                 const err = await res.json();
@@ -454,60 +1016,89 @@
             }
         }
 
-        // Student functions
-        async function joinCourse() {
-            const courseId = document.getElementById('joinCourseId').value;
-            const name = document.getElementById('joinCourseName').value;
-            if (!courseId || !name) { alert('Enter both Course ID and Name'); return; }
-
-            const res = await fetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}&course_id=${courseId}`, { method: 'POST' });
-            if (res.ok) {
-                document.getElementById('joinCourseId').value = '';
-                document.getElementById('joinCourseName').value = '';
-                alert('Joined course!');
-                loadStudentData();
-            } else {
-                const err = await res.json();
-                alert('Error: ' + err.detail);
-            }
+        // ========== STUDENT - COURSES ==========
+        async function loadStudentCourses() {
+            const res = await fetch(`${API}/courses/student/${user.id}/courses`);
+            studentCourses = await res.json();
+            renderSidebar();
         }
 
-        async function loadStudentData() {
-            // Load assignments
-            const res = await fetch(`${API}/courses/students/${user.id}/assignments`);
+        function renderSidebar() {
+            const container = document.getElementById('sidebarCourses');
+
+            if (studentCourses.length === 0) {
+                container.innerHTML = '<div style="padding: 12px 24px; color: #525252; font-size: 13px;">No courses yet</div>';
+                return;
+            }
+
+            let html = '';
+            studentCourses.forEach(course => {
+                const isActive = currentCourse && currentCourse.id === course.id;
+                html += `<div class="sidebar-course ${isActive ? 'active' : ''}" onclick="selectCourse(${course.id}, '${course.name.replace(/'/g, "\\'")}')">
+                    ${course.name}
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function selectCourse(courseId, courseName) {
+            currentCourse = { id: courseId, name: courseName };
+
+            document.getElementById('welcomeState').classList.add('hidden');
+            document.getElementById('courseContent').classList.remove('hidden');
+            document.getElementById('currentCourseName').textContent = courseName;
+            document.getElementById('currentCourseId').textContent = 'Course ID: ' + courseId;
+
+            renderSidebar();
+            loadCourseData();
+        }
+
+        async function loadCourseData() {
+            // Load assignments for this course
+            const res = await fetch(`${API}/courses/${currentCourse.id}/assignments/pending/${user.id}`);
             const assignments = await res.json();
 
             if (assignments.length === 0) {
-                document.getElementById('studentAssignments').innerHTML = '<p class="empty-state">No assignments yet. Join a course to see assignments.</p>';
-                document.getElementById('assignmentSelect').innerHTML = '';
+                document.getElementById('courseAssignments').innerHTML = '<p class="empty-state">No pending assignments.</p>';
+                document.getElementById('assignmentSelect').innerHTML = '<option value="">No assignments</option>';
             } else {
                 let html = '<table><tr><th>ID</th><th>Title</th><th>Task</th><th>Due Date</th></tr>';
                 let options = '';
                 assignments.forEach(a => {
                     const isFollowUp = a.title.includes('(Follow Up)');
-                    const rowStyle = isFollowUp ? ' style="background: #fef3c7;"' : '';
-                    html += `<tr${rowStyle}><td>${a.id}</td><td>${a.title}</td><td>${a.task}</td><td>${a.due_date}</td></tr>`;
+                    const rowStyle = isFollowUp ? ' style="background: rgba(234, 179, 8, 0.1);"' : '';
+                    html += `<tr${rowStyle}>
+                        <td>${a.id}</td>
+                        <td>${a.title}</td>
+                        <td>${a.task}</td>
+                        <td>${a.due_date}</td>
+                    </tr>`;
                     options += `<option value="${a.id}">${a.title}</option>`;
                 });
                 html += '</table>';
-                document.getElementById('studentAssignments').innerHTML = html;
+                document.getElementById('courseAssignments').innerHTML = html;
                 document.getElementById('assignmentSelect').innerHTML = options;
             }
 
             // Load submissions
-            const res2 = await fetch(`${API}/assignments/user/${user.id}/submissions`);
-            const submissions = await res2.json();
+            const subRes = await fetch(`${API}/assignments/user/${user.id}/submissions`);
+            const submissions = await subRes.json();
 
             if (submissions.length === 0) {
-                document.getElementById('studentSubmissions').innerHTML = '<p class="empty-state">No submissions yet.</p>';
+                document.getElementById('courseSubmissions').innerHTML = '<p class="empty-state">No submissions yet.</p>';
             } else {
-                let html2 = '<table><tr><th>Assignment ID</th><th>Content</th><th>Score</th><th>Feedback</th></tr>';
+                let html = '<table><tr><th>Assignment ID</th><th>Content</th><th>Score</th><th>Feedback</th></tr>';
                 submissions.forEach(s => {
-                    const scoreColor = s.score >= 80 ? 'color: #16a34a; font-weight: 600;' : 'color: #dc2626; font-weight: 600;';
-                    html2 += `<tr><td>${s.assignment_id}</td><td>${s.content}</td><td style="${scoreColor}">${s.score || '-'}</td><td>${s.ai_feedback || '-'}</td></tr>`;
+                    const scoreColor = s.score >= 80 ? 'color: #22c55e; font-weight: 600;' : 'color: #ef4444; font-weight: 600;';
+                    html += `<tr>
+                        <td>${s.assignment_id}</td>
+                        <td>${s.content}</td>
+                        <td style="${scoreColor}">${s.score || '-'}</td>
+                        <td>${s.ai_feedback || '-'}</td>
+                    </tr>`;
                 });
-                html2 += '</table>';
-                document.getElementById('studentSubmissions').innerHTML = html2;
+                html += '</table>';
+                document.getElementById('courseSubmissions').innerHTML = html;
             }
         }
 
@@ -519,7 +1110,6 @@
             if (!assignmentId) { alert('No assignment selected'); return; }
             if (!content) { alert('Enter your answer'); return; }
 
-            // Show loading state
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner"></span>Grading...';
 
@@ -529,24 +1119,58 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ content: content, assignment_id: parseInt(assignmentId), student_id: user.id })
                 });
+
                 if (res.ok) {
                     const result = await res.json();
                     document.getElementById('submissionContent').value = '';
 
                     if (result.score >= 80) {
-                        alert(`Great job! You scored ${result.score}/100. Assignment complete!`);
+                        alert(`Great job! You scored ${result.score}/100.`);
                     } else {
-                        alert(`You scored ${result.score}/100. A follow-up assignment has been created to help you improve. Check your assignments!`);
+                        alert(`You scored ${result.score}/100. A follow-up assignment has been created.`);
                     }
-                    loadStudentData();
+                    loadCourseData();
                 } else {
                     const err = await res.json();
                     alert('Error: ' + err.detail);
                 }
             } finally {
-                // Reset button
                 btn.disabled = false;
                 btn.innerHTML = 'Submit';
+            }
+        }
+
+        // ========== JOIN COURSE MODAL ==========
+        function openJoinModal() {
+            document.getElementById('joinModal').classList.remove('hidden');
+        }
+
+        function closeJoinModal(event) {
+            if (!event || event.target === event.currentTarget) {
+                document.getElementById('joinModal').classList.add('hidden');
+                document.getElementById('joinCourseId').value = '';
+                document.getElementById('joinCourseName').value = '';
+            }
+        }
+
+        async function joinCourse() {
+            const courseId = document.getElementById('joinCourseId').value;
+            const name = document.getElementById('joinCourseName').value;
+
+            if (!courseId || !name) {
+                alert('Enter both Course ID and Name');
+                return;
+            }
+
+            const res = await fetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}&course_id=${courseId}`, { method: 'POST' });
+
+            if (res.ok) {
+                closeJoinModal();
+                alert('Joined course!');
+                loadStudentCourses();
+            } else {
+                const err = await res.json();
+                alert('Error: ' + err.detail);
             }
         }
     </script>
