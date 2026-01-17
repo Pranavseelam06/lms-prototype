@@ -30,3 +30,6 @@ app.include_router(submission.router)
 @app.get("/health")
 def health():
     return {"status": "ok"}
+@app.get("/")
+def root():
+    return {"status": "alive", "message": "LMS API is running"}
