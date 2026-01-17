@@ -25,7 +25,7 @@ Return ONLY valid JSON in this exact format:
 """
 
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.5-flash",
         contents=prompt,
         config=types.GenerateContentConfig(
             response_mime_type="application/json"
@@ -38,8 +38,8 @@ Return ONLY valid JSON in this exact format:
         return json.loads(text)
     except json.JSONDecodeError:
         return {
-            "Score": 0,
-            "Feedback": "Model did not return valid JSON.",
-            "Follow Up": "none",
+            "score": None,
+            "feedback": "Model did not return valid JSON.",
+            "Follow Up": None,
             "raw_response": text
         }
