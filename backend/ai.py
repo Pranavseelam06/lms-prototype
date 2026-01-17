@@ -1,7 +1,7 @@
 import os
 import json
-import google.generativeai as genai
-
+from google import genai
+from google.genai import types
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
@@ -25,7 +25,7 @@ Return ONLY valid JSON in this exact format:
 """
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash",
         contents=prompt,
         config=types.GenerateContentConfig(
             response_mime_type="application/json"
@@ -38,8 +38,8 @@ Return ONLY valid JSON in this exact format:
         return json.loads(text)
     except json.JSONDecodeError:
         return {
-            "score": None,
-            "feedback": "Model did not return valid JSON.",
-            "Follow Up": None,
+            "Score": 0,
+            "Feedback": "Model did not return valid JSON.",
+            "Follow Up": "none",
             "raw_response": text
         }
