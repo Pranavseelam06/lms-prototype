@@ -1,165 +1,305 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LMS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
+        /* Reset */
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background: #f5f7fa;
-            min-height: 100vh;
-            color: #1a1a2e;
+        /* Tokens */
+        :root {
+            --bg: #f7f7f5;
+            --bg-raised: #ffffff;
+            --text: #1a1a1a;
+            --text-secondary: #656565;
+            --text-tertiary: #8a8a8a;
+            --border: #e4e4e2;
+            --border-strong: #d4d4d2;
+            --accent: #2c2c2c;
+            --accent-hover: #1a1a1a;
+            --danger: #b54a4a;
+            --danger-hover: #9a3e3e;
+            --success: #3d7a4a;
+            --warning-bg: #fdfbf5;
+            --warning-border: #e8e4d4;
+            --radius: 6px;
+            --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
         }
 
-        h1 {
-            text-align: center;
-            color: #1a1a2e;
-            font-size: 1.8rem;
-            font-weight: 700;
+        /* Base */
+        html {
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 32px 16px;
+            }
+        }
+
+        /* Typography */
+        .page-title {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
             margin-bottom: 32px;
         }
 
-        h2 {
-            color: #1a1a2e;
+        .panel-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 32px;
+        }
+
+        .panel-title span {
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .section-label {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .card+.card {
+            margin-top: 16px;
+        }
+
+        /* Login */
+        .login-wrapper {
+            max-width: 340px;
+            margin: 80px auto;
+        }
+
+        .login-header {
+            margin-bottom: 24px;
+        }
+
+        .login-header h1 {
             font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e0e4e8;
+            margin-bottom: 6px;
         }
 
-        h3 {
-            color: #1a1a2e;
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .login-header p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
         }
 
-        .section {
-            background: #fff;
-            border-radius: 8px;
-            padding: 24px;
-            margin: 16px 0;
-            border: 1px solid #e0e4e8;
+        /* Form Elements */
+        .field {
+            margin-bottom: 12px;
         }
 
-        input,
+        .field-label {
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="password"],
+        input[type="date"],
         select,
         textarea {
-            padding: 10px 14px;
-            margin: 4px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 14px;
+            width: 100%;
+            padding: 10px 12px;
             font-family: inherit;
-            transition: all 0.15s ease;
-            background: #fff;
-            color: #1a1a2e;
+            font-size: 0.9375rem;
+            color: var(--text);
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: border-color 0.15s ease;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: var(--text-tertiary);
         }
 
         input:focus,
         select:focus,
         textarea:focus {
             outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        input::placeholder,
-        textarea::placeholder {
-            color: #9ca3af;
-        }
-
-        input[type="number"],
-        input[type="text"],
-        input[type="date"] {
-            min-width: 180px;
+            border-color: var(--border-strong);
         }
 
         select {
             cursor: pointer;
-            min-width: 200px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23656565' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
         }
 
         textarea {
-            width: calc(100% - 8px);
             resize: vertical;
             min-height: 100px;
+            line-height: 1.5;
         }
 
-        button {
-            padding: 10px 20px;
-            margin: 4px;
-            cursor: pointer;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
+        /* Inline form row */
+        .form-row {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .form-row .field {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .form-row input,
+        .form-row select {
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-row .btn {
+                width: 100%;
+            }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
             font-family: inherit;
-            transition: all 0.15s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #fff;
+            background: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease;
+            white-space: nowrap;
         }
 
-        button:hover {
-            background: #1d4ed8;
+        .btn:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
         }
 
-        button:active {
-            transform: scale(0.98);
+        .btn:active {
+            transform: translateY(1px);
         }
 
-        button:disabled {
-            background: #9ca3af;
+        .btn:disabled {
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
-        h3 button {
-            padding: 6px 14px;
-            font-size: 13px;
+        .btn-full {
+            width: 100%;
         }
 
-        .hidden {
-            display: none;
+        .btn-ghost {
+            color: var(--danger);
+            background: transparent;
+            border-color: var(--border);
         }
 
+        .btn-ghost:hover {
+            background: var(--bg);
+            border-color: var(--border-strong);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.8125rem;
+        }
+
+        /* Section header with action */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .section-header .section-label {
+            margin-bottom: 0;
+        }
+
+        /* Tables */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 12px;
         }
 
         th {
-            background: #f9fafb;
-            color: #4b5563;
-            padding: 12px 14px;
             text-align: left;
-            font-weight: 600;
-            font-size: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid #e0e4e8;
+            letter-spacing: 0.04em;
+            color: var(--text-tertiary);
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border);
         }
 
         td {
-            padding: 12px 14px;
-            text-align: left;
-            border-bottom: 1px solid #f0f0f0;
-            color: #374151;
-            font-size: 14px;
+            font-size: 0.875rem;
+            color: var(--text);
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
         }
 
         tr:last-child td {
@@ -167,19 +307,50 @@
         }
 
         tr:hover td {
-            background: #f9fafb;
+            background: var(--bg);
         }
 
+        .cell-secondary {
+            color: var(--text-secondary);
+        }
+
+        .cell-id {
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+        }
+
+        .score-pass {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .score-fail {
+            color: var(--danger);
+            font-weight: 500;
+        }
+
+        .row-highlight td {
+            background: var(--warning-bg);
+        }
+
+        /* Empty state */
+        .empty {
+            text-align: center;
+            padding: 32px 16px;
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+        }
+
+        /* Loading spinner */
         .spinner {
             display: inline-block;
             width: 14px;
             height: 14px;
-            border: 2px solid #fff;
-            border-top-color: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-right: 8px;
-            vertical-align: middle;
+            animation: spin 0.7s linear infinite;
         }
 
         @keyframes spin {
@@ -188,153 +359,171 @@
             }
         }
 
-        #loginDiv {
-            max-width: 400px;
-            margin: 80px auto;
+        /* Utilities */
+        .hidden {
+            display: none !important;
         }
 
-        #loginDiv h2 {
-            text-align: center;
-            border: none;
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-        }
-
-        #loginDiv .subtitle {
-            text-align: center;
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-
-        #loginDiv input,
-        #loginDiv select {
-            width: calc(100% - 8px);
-            margin: 6px 0;
-        }
-
-        #loginDiv button {
-            width: 100%;
-            margin-top: 16px;
-            padding: 12px;
-        }
-
-        .logout-btn {
-            background: #fff;
-            color: #dc2626;
-            border: 1px solid #dc2626;
+        .mt-16 {
             margin-top: 16px;
         }
 
-        .logout-btn:hover {
-            background: #fef2f2;
+        .mt-24 {
+            margin-top: 24px;
         }
 
-        .panel-container {
-            background: #fff;
-            border-radius: 8px;
+        /* Panel */
+        .panel {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             padding: 32px;
-            border: 1px solid #e0e4e8;
         }
 
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 4px;
+        @media (max-width: 600px) {
+            .panel {
+                padding: 24px 16px;
+            }
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 24px;
-            color: #6b7280;
-            font-size: 14px;
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 24px 0;
         }
     </style>
 </head>
 
 <body>
-    <h1>Learning Management System</h1>
+    <div class="container">
+        <div class="page-title">Learning Management System</div>
 
-    <!-- Login -->
-    <div id="loginDiv" class="section">
-        <h2>Sign In</h2>
-        <p class="subtitle">Enter your credentials to continue</p>
-        <input type="number" id="userId" placeholder="User ID">
-        <input type="text" id="userName" placeholder="Your Name">
-        <input type="password" id="userPassword" placeholder="Password">
-        <select id="userRole">
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-        </select>
-        <button onclick="login()">Sign In</button>
-    </div>
-
-    <!-- Teacher Panel -->
-    <div id="teacherPanel" class="hidden">
-        <div class="panel-container">
-            <h2>Teacher Panel — <span id="teacherName"></span></h2>
-
-            <div class="section">
-                <h3>Create Course</h3>
-                <div class="form-row">
-                    <input type="text" id="courseName" placeholder="Course Name">
-                    <button onclick="createCourse()">Create</button>
+        <!-- Login -->
+        <div id="loginDiv" class="login-wrapper">
+            <div class="card">
+                <div class="login-header">
+                    <h1>Sign in</h1>
+                    <p>Enter your credentials to continue</p>
                 </div>
-            </div>
 
-            <div class="section">
-                <h3>Add Assignment</h3>
-                <div class="form-row">
-                    <select id="courseSelect"></select>
-                    <input type="text" id="assignmentTitle" placeholder="Assignment Title">
-                    <input type="text" id="assignmentTask" placeholder="Task instructions for student">
-                    <input type="date" id="dueDate">
-                    <button onclick="createAssignment()">Add Assignment</button>
+                <div class="field">
+                    <label class="field-label" for="userId">User ID</label>
+                    <input type="number" id="userId" placeholder="123">
                 </div>
-            </div>
 
-            <div class="section">
-                <h3>My Courses</h3>
-                <div id="teacherCourses"></div>
-            </div>
+                <div class="field">
+                    <label class="field-label" for="userName">Name</label>
+                    <input type="text" id="userName" placeholder="Your name">
+                </div>
 
-            <button class="logout-btn" onclick="logout()">Sign Out</button>
+                <div class="field">
+                    <label class="field-label" for="userPassword">Password</label>
+                    <input type="password" id="userPassword" placeholder="••••••••">
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="userRole">Role</label>
+                    <select id="userRole">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-full mt-16" onclick="login()">Sign in</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Student Panel -->
-    <div id="studentPanel" class="hidden">
-        <div class="panel-container">
-            <h2>Student Panel — <span id="studentName"></span></h2>
+        <!-- Teacher Panel -->
+        <div id="teacherPanel" class="hidden">
+            <div class="panel">
+                <div class="panel-title">Teacher Dashboard <span>— <span id="teacherName"></span></span></div>
 
-            <div class="section">
-                <h3>Join Course</h3>
-                <div class="form-row">
-                    <input type="number" id="joinCourseId" placeholder="Course ID">
-                    <input type="text" id="joinCourseName" placeholder="Course Name">
-                    <button onclick="joinCourse()">Join</button>
+                <div class="card">
+                    <div class="section-label">Create Course</div>
+                    <div class="form-row">
+                        <div class="field">
+                            <input type="text" id="courseName" placeholder="Course name">
+                        </div>
+                        <button class="btn" onclick="createCourse()">Create</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="section">
-                <h3>My Assignments <button onclick="loadStudentData()">Refresh</button></h3>
-                <div id="studentAssignments"></div>
-            </div>
+                <div class="card">
+                    <div class="section-label">Add Assignment</div>
+                    <div class="field">
+                        <label class="field-label">Course</label>
+                        <select id="courseSelect"></select>
+                    </div>
+                    <div class="form-row mt-16">
+                        <div class="field">
+                            <input type="text" id="assignmentTitle" placeholder="Title">
+                        </div>
+                        <div class="field">
+                            <input type="date" id="dueDate">
+                        </div>
+                    </div>
+                    <div class="field mt-16">
+                        <textarea id="assignmentTask" placeholder="Task instructions for students"></textarea>
+                    </div>
+                    <button class="btn mt-16" onclick="createAssignment()">Add Assignment</button>
+                </div>
 
-            <div class="section">
-                <h3>Submit Assignment</h3>
-                <select id="assignmentSelect"></select><br>
-                <textarea id="submissionContent" placeholder="Your answer" rows="4"></textarea><br>
-                <button id="submitBtn" onclick="submitAssignment()">Submit</button>
-            </div>
+                <div class="card">
+                    <div class="section-label">My Courses</div>
+                    <div id="teacherCourses"></div>
+                </div>
 
-            <div class="section">
-                <h3>My Submissions</h3>
-                <div id="studentSubmissions"></div>
+                <button class="btn btn-ghost btn-full mt-24" onclick="logout()">Sign out</button>
             </div>
+        </div>
 
-            <button class="logout-btn" onclick="logout()">Sign Out</button>
+        <!-- Student Panel -->
+        <div id="studentPanel" class="hidden">
+            <div class="panel">
+                <div class="panel-title">Student Dashboard <span>— <span id="studentName"></span></span></div>
+
+                <div class="card">
+                    <div class="section-label">Join Course</div>
+                    <div class="form-row">
+                        <div class="field">
+                            <input type="number" id="joinCourseId" placeholder="Course ID">
+                        </div>
+                        <div class="field">
+                            <input type="text" id="joinCourseName" placeholder="Course name">
+                        </div>
+                        <button class="btn" onclick="joinCourse()">Join</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="section-header">
+                        <div class="section-label">My Assignments</div>
+                        <button class="btn btn-small btn-ghost" onclick="loadStudentData()">Refresh</button>
+                    </div>
+                    <div id="studentAssignments"></div>
+                </div>
+
+                <div class="card">
+                    <div class="section-label">Submit Assignment</div>
+                    <div class="field">
+                        <label class="field-label">Assignment</label>
+                        <select id="assignmentSelect"></select>
+                    </div>
+                    <div class="field mt-16">
+                        <label class="field-label">Your Answer</label>
+                        <textarea id="submissionContent" placeholder="Write your response here..."></textarea>
+                    </div>
+                    <button id="submitBtn" class="btn mt-16" onclick="submitAssignment()">Submit</button>
+                </div>
+
+                <div class="card">
+                    <div class="section-label">My Submissions</div>
+                    <div id="studentSubmissions"></div>
+                </div>
+
+                <button class="btn btn-ghost btn-full mt-24" onclick="logout()">Sign out</button>
+            </div>
         </div>
     </div>
 
@@ -348,16 +537,20 @@
             const password = document.getElementById('userPassword').value;
             const role = document.getElementById('userRole').value;
 
-            if (!id || !name || !password) { alert('Enter ID, Name and Password'); return; }
+            if (!id || !name || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
 
             const res = await fetch(`${API}/users/login?user_id=${id}&name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}&role=${role}`, { method: 'POST' });
+
             if (!res.ok) {
                 const err = await res.json();
                 alert('Error: ' + err.detail);
                 return;
             }
-            user = await res.json();
 
+            user = await res.json();
             document.getElementById('loginDiv').classList.add('hidden');
 
             if (role === 'teacher') {
@@ -378,19 +571,23 @@
             document.getElementById('loginDiv').classList.remove('hidden');
         }
 
-        // Teacher functions
+        // Teacher
         async function createCourse() {
             const name = document.getElementById('courseName').value;
-            if (!name) { alert('Enter course name'); return; }
+            if (!name) {
+                alert('Enter a course name');
+                return;
+            }
 
             const res = await fetch(`${API}/courses/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: name, teacher_id: user.id })
             });
+
             if (res.ok) {
                 document.getElementById('courseName').value = '';
-                alert('Course created!');
+                alert('Course created');
                 loadTeacherCourses();
             } else {
                 const err = await res.json();
@@ -403,18 +600,19 @@
             const courses = await res.json();
 
             if (courses.length === 0) {
-                document.getElementById('teacherCourses').innerHTML = '<p class="empty-state">No courses yet. Create one above.</p>';
+                document.getElementById('teacherCourses').innerHTML = '<p class="empty">No courses yet</p>';
+                document.getElementById('courseSelect').innerHTML = '';
             } else {
-                let html = '<table><tr><th>ID</th><th>Name</th></tr>';
-                courses.forEach(c => { html += `<tr><td>${c.id}</td><td>${c.name}</td></tr>`; });
-                html += '</table>';
+                let html = '<table><thead><tr><th>ID</th><th>Name</th></tr></thead><tbody>';
+                let options = '';
+                courses.forEach(c => {
+                    html += `<tr><td class="cell-id">${c.id}</td><td>${c.name}</td></tr>`;
+                    options += `<option value="${c.id}">${c.name}</option>`;
+                });
+                html += '</tbody></table>';
                 document.getElementById('teacherCourses').innerHTML = html;
+                document.getElementById('courseSelect').innerHTML = options;
             }
-
-            // Update dropdown
-            let options = '';
-            courses.forEach(c => { options += `<option value="${c.id}">${c.name}</option>`; });
-            document.getElementById('courseSelect').innerHTML = options;
         }
 
         async function createAssignment() {
@@ -423,35 +621,48 @@
             const task = document.getElementById('assignmentTask').value;
             const dueDate = document.getElementById('dueDate').value;
 
-            if (!courseId) { alert('Create a course first'); return; }
-            if (!title || !task || !dueDate) { alert('Fill all fields'); return; }
+            if (!courseId) {
+                alert('Create a course first');
+                return;
+            }
+            if (!title || !task || !dueDate) {
+                alert('Please fill in all fields');
+                return;
+            }
 
             const res = await fetch(`${API}/courses/${courseId}/assignments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title: title, task: task, due_date: dueDate, course_id: parseInt(courseId) })
             });
+
             if (res.ok) {
                 document.getElementById('assignmentTitle').value = '';
                 document.getElementById('assignmentTask').value = '';
-                alert('Assignment created!');
+                document.getElementById('dueDate').value = '';
+                alert('Assignment created');
             } else {
                 const err = await res.json();
                 alert('Error: ' + err.detail);
             }
         }
 
-        // Student functions
+        // Student
         async function joinCourse() {
             const courseId = document.getElementById('joinCourseId').value;
             const name = document.getElementById('joinCourseName').value;
-            if (!courseId || !name) { alert('Enter both Course ID and Name'); return; }
+
+            if (!courseId || !name) {
+                alert('Enter both Course ID and name');
+                return;
+            }
 
             const res = await fetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}&course_id=${courseId}`, { method: 'POST' });
+
             if (res.ok) {
                 document.getElementById('joinCourseId').value = '';
                 document.getElementById('joinCourseName').value = '';
-                alert('Joined course!');
+                alert('Joined course');
                 loadStudentData();
             } else {
                 const err = await res.json();
@@ -460,41 +671,41 @@
         }
 
         async function loadStudentData() {
-            // Load assignments
+            // Assignments
             const res = await fetch(`${API}/courses/students/${user.id}/assignments`);
             const assignments = await res.json();
 
             if (assignments.length === 0) {
-                document.getElementById('studentAssignments').innerHTML = '<p class="empty-state">No assignments yet. Join a course to see assignments.</p>';
+                document.getElementById('studentAssignments').innerHTML = '<p class="empty">No assignments yet. Join a course to get started.</p>';
                 document.getElementById('assignmentSelect').innerHTML = '';
             } else {
-                let html = '<table><tr><th>ID</th><th>Title</th><th>Task</th><th>Due Date</th></tr>';
+                let html = '<table><thead><tr><th>ID</th><th>Title</th><th>Task</th><th>Due</th></tr></thead><tbody>';
                 let options = '';
                 assignments.forEach(a => {
                     const isFollowUp = a.title.includes('(Follow Up)');
-                    const rowStyle = isFollowUp ? ' style="background: #fef3c7;"' : '';
-                    html += `<tr${rowStyle}><td>${a.id}</td><td>${a.title}</td><td>${a.task}</td><td>${a.due_date}</td></tr>`;
+                    const rowClass = isFollowUp ? ' class="row-highlight"' : '';
+                    html += `<tr${rowClass}><td class="cell-id">${a.id}</td><td>${a.title}</td><td class="cell-secondary">${a.task}</td><td class="cell-secondary">${a.due_date}</td></tr>`;
                     options += `<option value="${a.id}">${a.title}</option>`;
                 });
-                html += '</table>';
+                html += '</tbody></table>';
                 document.getElementById('studentAssignments').innerHTML = html;
                 document.getElementById('assignmentSelect').innerHTML = options;
             }
 
-            // Load submissions
+            // Submissions
             const res2 = await fetch(`${API}/assignments/user/${user.id}/submissions`);
             const submissions = await res2.json();
 
             if (submissions.length === 0) {
-                document.getElementById('studentSubmissions').innerHTML = '<p class="empty-state">No submissions yet.</p>';
+                document.getElementById('studentSubmissions').innerHTML = '<p class="empty">No submissions yet</p>';
             } else {
-                let html2 = '<table><tr><th>Assignment ID</th><th>Content</th><th>Score</th><th>Feedback</th></tr>';
+                let html = '<table><thead><tr><th>ID</th><th>Content</th><th>Score</th><th>Feedback</th></tr></thead><tbody>';
                 submissions.forEach(s => {
-                    const scoreColor = s.score >= 80 ? 'color: #16a34a; font-weight: 600;' : 'color: #dc2626; font-weight: 600;';
-                    html2 += `<tr><td>${s.assignment_id}</td><td>${s.content}</td><td style="${scoreColor}">${s.score || '-'}</td><td>${s.ai_feedback || '-'}</td></tr>`;
+                    const scoreClass = s.score >= 80 ? 'score-pass' : 'score-fail';
+                    html += `<tr><td class="cell-id">${s.assignment_id}</td><td>${s.content}</td><td class="${scoreClass}">${s.score || '—'}</td><td class="cell-secondary">${s.ai_feedback || '—'}</td></tr>`;
                 });
-                html2 += '</table>';
-                document.getElementById('studentSubmissions').innerHTML = html2;
+                html += '</tbody></table>';
+                document.getElementById('studentSubmissions').innerHTML = html;
             }
         }
 
@@ -503,12 +714,17 @@
             const content = document.getElementById('submissionContent').value;
             const btn = document.getElementById('submitBtn');
 
-            if (!assignmentId) { alert('No assignment selected'); return; }
-            if (!content) { alert('Enter your answer'); return; }
+            if (!assignmentId) {
+                alert('No assignment selected');
+                return;
+            }
+            if (!content) {
+                alert('Enter your answer');
+                return;
+            }
 
-            // Show loading state
             btn.disabled = true;
-            btn.innerHTML = '<span class="spinner"></span>Grading...';
+            btn.innerHTML = '<span class="spinner"></span> Grading...';
 
             try {
                 const res = await fetch(`${API}/assignments/${assignmentId}/submissions`, {
@@ -516,14 +732,15 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ content: content, assignment_id: parseInt(assignmentId), student_id: user.id })
                 });
+
                 if (res.ok) {
                     const result = await res.json();
                     document.getElementById('submissionContent').value = '';
 
                     if (result.score >= 80) {
-                        alert(`Great job! You scored ${result.score}/100. Assignment complete!`);
+                        alert(`Score: ${result.score}/100. Great work!`);
                     } else {
-                        alert(`You scored ${result.score}/100. A follow-up assignment has been created to help you improve. Check your assignments!`);
+                        alert(`Score: ${result.score}/100. A follow-up assignment has been added.`);
                     }
                     loadStudentData();
                 } else {
@@ -531,7 +748,6 @@
                     alert('Error: ' + err.detail);
                 }
             } finally {
-                // Reset button
                 btn.disabled = false;
                 btn.innerHTML = 'Submit';
             }
