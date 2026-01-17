@@ -2,8 +2,8 @@ name: Keep Render Awake
 
 on:
   schedule:
-    - cron: "*/15 * * * *"   # every 15 minutes
-  workflow_dispatch:
+    - cron: "*/14 * * * *"   # every 14 minutes (Render sleeps after 15)
+  workflow_dispatch:         # allows manual trigger
 
 jobs:
   ping:
@@ -11,4 +11,10 @@ jobs:
     steps:
       - name: Ping Render FastAPI
         run: |
-          curl -s https://lms-prototype-1.onrender.com
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://lms-prototype-1.onrender.com/health)
+          echo "Health check response: $response"
+          if [ "$response" != "200" ]; then
+            echo "Health check failed!"
+            exit 1
+          fi
+          echo "Server is awake!"
