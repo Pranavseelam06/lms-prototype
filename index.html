@@ -901,13 +901,35 @@
         }
 
         function logout() {
+            // Reset all state variables
             user = null;
             currentCourse = null;
             selectedRole = null;
+            studentCourses = [];
+
+            // Reset student dashboard UI state
+            document.getElementById('welcomeState').classList.remove('hidden');
+            document.getElementById('courseContent').classList.add('hidden');
+            document.getElementById('sidebarCourses').innerHTML = '';
+            document.getElementById('courseAssignments').innerHTML = '';
+            document.getElementById('courseSubmissions').innerHTML = '';
+            document.getElementById('assignmentSelect').innerHTML = '';
+            document.getElementById('submissionContent').value = '';
+
+            // Reset teacher dashboard UI state
+            document.getElementById('teacherCourses').innerHTML = '';
+            document.getElementById('courseSelect').innerHTML = '';
+            document.getElementById('courseName').value = '';
+            document.getElementById('assignmentTitle').value = '';
+            document.getElementById('assignmentTask').value = '';
+            document.getElementById('dueDate').value = '';
+
+            // Hide dashboards and show home page
             document.getElementById('studentDashboard').classList.add('hidden');
             document.getElementById('teacherDashboard').classList.add('hidden');
             document.getElementById('homePage').classList.remove('hidden');
-            // Clear inputs
+
+            // Clear login inputs
             document.getElementById('userId').value = '';
             document.getElementById('userName').value = '';
             document.getElementById('userPassword').value = '';
