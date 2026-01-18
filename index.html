@@ -753,7 +753,7 @@
             <p class="login-subtitle" id="loginSubtitle">Enter your credentials</p>
             <div class="form-field">
                 <label>User ID</label>
-                <input type="number" id="userId" placeholder="123">
+                <input type="number" id="userId" placeholder="123" min="1">
             </div>
             <div class="form-field">
                 <label>Name</label>
@@ -859,7 +859,7 @@
     <div id="joinModal" class="modal-overlay hidden" onclick="closeJoinModal(event)">
         <div class="modal" onclick="event.stopPropagation()">
             <h3>Join a Course</h3>
-            <input type="number" id="joinCourseId" placeholder="Course ID">
+            <input type="number" id="joinCourseId" placeholder="Course ID" min="1">
             <input type="text" id="joinCourseName" placeholder="Course Name">
             <div class="modal-actions">
                 <button class="modal-cancel" onclick="closeJoinModal()">Cancel</button>
@@ -938,11 +938,31 @@
         // ========== AUTH ==========
         async function login() {
             const id = document.getElementById('userId').value;
-            const name = document.getElementById('userName').value;
+            const name = document.getElementById('userName').value.trim();
             const password = document.getElementById('userPassword').value;
 
+            // Validate all fields are filled
             if (!id || !name || !password) {
                 alert('Please fill in all fields');
+                return;
+            }
+
+            // Validate User ID is a positive number
+            const userId = parseInt(id);
+            if (isNaN(userId) || userId <= 0) {
+                alert('User ID must be a positive number');
+                return;
+            }
+
+            // Validate name is not empty after trimming
+            if (name.length === 0) {
+                alert('Please enter a valid name');
+                return;
+            }
+
+            // Validate password is not empty and meets minimum length
+            if (password.length < 1) {
+                alert('Please enter a password');
                 return;
             }
 
@@ -1208,16 +1228,29 @@
 
         async function joinCourse() {
             const courseId = document.getElementById('joinCourseId').value;
-            const name = document.getElementById('joinCourseName').value;
+            const name = document.getElementById('joinCourseName').value.trim();
 
             if (!courseId || !name) {
                 alert('Enter both Course ID and Name');
                 return;
             }
 
-            console.log('Joining course:', { courseId, name, studentId: user.id });
+            // Validate Course ID is a positive number
+            const courseIdNum = parseInt(courseId);
+            if (isNaN(courseIdNum) || courseIdNum <= 0) {
+                alert('Course ID must be a positive number');
+                return;
+            }
 
-            const res = await fetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}&course_id=${courseId}`, { method: 'POST' });
+            // Validate name is not empty after trimming
+            if (name.length === 0) {
+                alert('Please enter a valid course name');
+                return;
+            }
+
+            console.log('Joining course:', { courseId: courseIdNum, name, studentId: user.id });
+
+            const res = await fetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}&course_id=${courseIdNum}`, { method: 'POST' });
 
             if (res.ok) {
                 const result = await res.json();
