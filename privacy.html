@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Privacy information for the Coursework LMS testing prototype.">
+    <meta name="theme-color" content="#f3efe4">
+    <title>Privacy — Coursework LMS</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./assets/styles.css?v=20260803-newspaper-5">
+</head>
+<body class="legal-body">
+    <div class="prototype-banner" role="note" aria-label="Prototype environment notice">
+        <strong>Prototype environment</strong>
+        <span>For testing purposes only. Do not use real personal data or passwords.</span>
+    </div>
+
+    <main class="legal-page">
+        <header class="legal-masthead">
+            <a class="brand" href="./" aria-label="Return to Coursework">
+                <span class="brand-mark" aria-hidden="true">C</span>
+                <span>Coursework</span>
+            </a>
+            <div class="edition-line" aria-hidden="true">
+                <span>Privacy notice</span>
+                <span>Prototype edition</span>
+                <span>Updated August 3, 2026</span>
+            </div>
+        </header>
+
+        <article class="legal-article">
+            <header class="legal-article__header">
+                <p class="eyebrow">Important testing notice</p>
+                <h1>Privacy Information</h1>
+                <p>This page explains how the Coursework testing prototype handles information. Because this is not a production service, you should not provide real personal, student, or institutional data.</p>
+            </header>
+
+            <section>
+                <h2>1. Information the prototype stores</h2>
+                <p>The backend may store the user ID, display name, role, optional grade level, course and enrollment information, assignment instructions, submission content, AI-generated scores, and AI-generated feedback entered during testing.</p>
+            </section>
+
+            <section>
+                <h2>2. Password handling</h2>
+                <p>Passwords are stored as salted PBKDF2-SHA256 hashes rather than readable plaintext. Hashing reduces risk but does not make this prototype suitable for real credentials. Always use a unique, invented test password that you do not use anywhere else.</p>
+            </section>
+
+            <section>
+                <h2>3. AI processing</h2>
+                <p>Assignment instructions and submission content may be transmitted to Google’s Gemini service for automated grading and feedback. Do not submit content containing real names, education records, confidential material, health information, or other sensitive data.</p>
+            </section>
+
+            <section>
+                <h2>4. Infrastructure and network requests</h2>
+                <p>The static frontend may be served by GitHub Pages and communicates with a backend hosted on Render. Those providers may process routine technical information such as IP addresses, timestamps, request metadata, and logs under their own policies.</p>
+            </section>
+
+            <section>
+                <h2>5. Cookies and tracking</h2>
+                <p>The current frontend does not intentionally use advertising trackers, analytics, browser cookies, or local storage. Hosting and infrastructure providers may maintain their own operational logs.</p>
+            </section>
+
+            <section>
+                <h2>6. Retention, access, and deletion</h2>
+                <p>Test data may remain in the prototype database until it is manually removed, reset, or the project is discontinued. No guaranteed retention or backup period applies. Contact the project maintainer through the repository to request removal of test data.</p>
+            </section>
+
+            <section>
+                <h2>7. Children and real student records</h2>
+                <p>This prototype is not intended to collect information from children or to store real student education records. It has not been designed or reviewed for compliance with FERPA, COPPA, GDPR, or similar privacy requirements.</p>
+            </section>
+
+            <aside class="legal-callout">
+                <strong>Safest testing approach</strong>
+                <p>Use fictional users, non-sensitive assignments, and a unique test password. Assume all test content could be reset or exposed.</p>
+            </aside>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+            <p><strong>Testing prototype.</strong> Not intended for production use or real student information.</p>
+            <nav class="site-footer__links" aria-label="Site information">
+                <a href="./">Application</a>
+                <a href="./terms.html">Terms</a>
+                <a href="./privacy.html" aria-current="page">Privacy</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>

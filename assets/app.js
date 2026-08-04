@@ -200,6 +200,9 @@ function showOnlyView(viewId) {
     ['landingView', 'loginView', 'studentView', 'teacherView'].forEach((id) => {
         $(`#${id}`).classList.toggle('is-hidden', id !== viewId);
     });
+
+    if (viewId) document.body.dataset.view = viewId;
+    else delete document.body.dataset.view;
 }
 
 function openLogin(role) {
