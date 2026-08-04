@@ -118,19 +118,6 @@ svg {
     display: none !important;
 }
 
-.skip-link {
-    position: fixed;
-    top: calc(var(--prototype-banner-height) + 12px);
-    left: 12px;
-    z-index: 2000;
-    padding: 8px 12px;
-    color: var(--text-primary);
-    background: var(--bg-surface);
-    border: 1px solid var(--focus);
-    border-radius: var(--radius-sm);
-    transform: translateY(-160%);
-}
-
 .prototype-banner {
     position: sticky;
     top: 0;
@@ -163,10 +150,6 @@ svg {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     white-space: nowrap;
-}
-
-.skip-link:focus {
-    transform: translateY(0);
 }
 
 /* Shared components */

@@ -338,7 +338,6 @@ function enterStudentWorkspace() {
     setUserIdentity('student', state.user.name);
     $('#studentWelcome').classList.remove('is-hidden');
     $('#studentCourseWorkspace').classList.add('is-hidden');
-    $('.skip-link').setAttribute('href', '#mainContent');
     showOnlyView('studentView');
     loadStudentCourses();
 }
@@ -346,7 +345,6 @@ function enterStudentWorkspace() {
 function enterTeacherWorkspace() {
     setUserIdentity('teacher', state.user.name);
     $('#teacherOwner').textContent = state.user.name;
-    $('.skip-link').setAttribute('href', '#teacherOverview');
     showOnlyView('teacherView');
     loadTeacherCourses();
 }
