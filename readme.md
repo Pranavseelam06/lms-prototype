@@ -126,4 +126,13 @@ Restart your terminal after setting the key.
 uvicorn main:app --reload
 ```
 ### Running the frontend
-Open the lms-frontend.html to access the grader
+The frontend is a static site with no build step. From the repository root, either open `index.html` or serve the directory with any static file server.
+
+### Deploying the frontend to GitHub Pages
+
+1. Push the repository to GitHub.
+2. Open **Settings → Pages** for the repository.
+3. Choose **Deploy from a branch** and select the branch and repository root.
+4. Save the Pages configuration.
+
+`index.html` uses relative paths for all frontend assets and communicates with the existing Render API over HTTPS. It does not require Node, server-side rendering, serverless functions, or a runtime application server.
