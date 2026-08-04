@@ -1,5 +1,7 @@
 # LMS Prototype
 
+> **Prototype notice:** This application is intended for testing and demonstration purposes only. Do not use real personal information or production passwords.
+
 ## Overview
 This project is a **Learning Management System (LMS) prototype** built using **FastAPI**, **SQLite**, and **plain HTML/CSS/JavaScript**.
 
@@ -35,6 +37,9 @@ This is a **prototype**.
 ### Authentication (Prototype)
 - Login using **User ID + Role + Password**
 - Users are **auto-created** if they do not exist
+- Passwords are stored as salted **PBKDF2-SHA256** hashes rather than plaintext
+- Legacy plaintext passwords are migrated automatically when the backend starts
+- Password hashes are never included in user or login API responses
 ---
 
 ### Teacher Features

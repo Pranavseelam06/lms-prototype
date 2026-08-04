@@ -20,6 +20,7 @@
     --danger-muted: rgba(248, 81, 73, 0.12);
     --focus: #58a6ff;
     --sidebar-width: 264px;
+    --prototype-banner-height: 34px;
     --radius-sm: 5px;
     --radius-md: 8px;
     --shadow-dialog: 0 20px 56px rgba(0, 0, 0, 0.48);
@@ -39,6 +40,7 @@ html {
 body {
     min-height: 100vh;
     margin: 0;
+    padding-top: var(--prototype-banner-height);
     color: var(--text-primary);
     background: var(--bg-canvas);
     font-size: 14px;
@@ -113,7 +115,7 @@ svg {
 
 .skip-link {
     position: fixed;
-    top: 12px;
+    top: calc(var(--prototype-banner-height) + 12px);
     left: 12px;
     z-index: 2000;
     padding: 8px 12px;
@@ -122,6 +124,29 @@ svg {
     border: 1px solid var(--focus);
     border-radius: var(--radius-sm);
     transform: translateY(-160%);
+}
+
+.prototype-banner {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 1900;
+    display: flex;
+    height: var(--prototype-banner-height);
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 14px;
+    color: #d7a940;
+    background: #211b0e;
+    border-bottom: 1px solid rgba(210, 153, 34, 0.34);
+    font-size: 11px;
+    line-height: 1.25;
+    text-align: center;
+}
+
+.prototype-banner strong {
+    color: #efc45f;
+    white-space: nowrap;
 }
 
 .skip-link:focus {
@@ -567,7 +592,7 @@ input[type="date"] {
 
 .backend-loader {
     position: fixed;
-    inset: 0;
+    inset: var(--prototype-banner-height) 0 0;
     z-index: 1500;
     display: grid;
     place-items: center;
@@ -623,7 +648,7 @@ input[type="date"] {
 
 .request-overlay {
     position: fixed;
-    inset: 0;
+    inset: var(--prototype-banner-height) 0 0;
     z-index: 1400;
     display: grid;
     place-items: center;
@@ -661,7 +686,7 @@ input[type="date"] {
 
 .auth-layout {
     display: grid;
-    min-height: 100vh;
+    min-height: calc(100vh - var(--prototype-banner-height));
     place-items: center;
     padding: 32px 20px;
 }
@@ -766,12 +791,12 @@ input[type="date"] {
 /* Application shell */
 
 .app-shell {
-    min-height: 100vh;
+    min-height: calc(100vh - var(--prototype-banner-height));
 }
 
 .sidebar {
     position: fixed;
-    inset: 0 auto 0 0;
+    inset: var(--prototype-banner-height) auto 0 0;
     z-index: 500;
     display: flex;
     width: var(--sidebar-width);
@@ -927,7 +952,7 @@ input[type="date"] {
 }
 
 .app-main {
-    min-height: 100vh;
+    min-height: calc(100vh - var(--prototype-banner-height));
     margin-left: var(--sidebar-width);
 }
 
@@ -942,7 +967,7 @@ input[type="date"] {
 
 .workspace-empty {
     display: grid;
-    min-height: 100vh;
+    min-height: calc(100vh - var(--prototype-banner-height));
     align-content: center;
     justify-items: center;
     padding: 40px;
@@ -1233,12 +1258,12 @@ input[type="date"] {
     }
 
     .app-main {
-        min-height: calc(100vh - var(--mobile-header-height));
+        min-height: calc(100vh - var(--prototype-banner-height) - var(--mobile-header-height));
         margin-left: 0;
     }
 
     .workspace-empty {
-        min-height: calc(100vh - var(--mobile-header-height));
+        min-height: calc(100vh - var(--prototype-banner-height) - var(--mobile-header-height));
     }
 
     .workspace {
@@ -1328,6 +1353,17 @@ input[type="date"] {
 }
 
 @media (max-width: 520px) {
+    :root {
+        --prototype-banner-height: 42px;
+    }
+
+    .prototype-banner {
+        align-content: center;
+        flex-wrap: wrap;
+        gap: 1px 6px;
+        padding-block: 5px;
+    }
+
     .auth-layout {
         align-items: start;
         padding: 0;
@@ -1336,7 +1372,7 @@ input[type="date"] {
 
     .auth-panel,
     .auth-panel--narrow {
-        min-height: 100vh;
+        min-height: calc(100vh - var(--prototype-banner-height));
         padding: 26px 20px;
         border: 0;
         border-radius: 0;
