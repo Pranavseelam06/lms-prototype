@@ -23,6 +23,86 @@
             display: none !important;
         }
 
+        /* ========== BACKEND LOADING SCREEN ========== */
+        .backend-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.04), transparent 32%),
+                #0f0f0f;
+        }
+
+        .backend-loader-card {
+            width: 100%;
+            max-width: 430px;
+            padding: 36px;
+            text-align: center;
+            background: #171717;
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+        }
+
+        .backend-loader-spinner {
+            width: 38px;
+            height: 38px;
+            margin: 0 auto 24px;
+            border: 3px solid #333;
+            border-top-color: #fafafa;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .backend-loader-title {
+            margin-bottom: 10px;
+            color: #fafafa;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .backend-loader-message {
+            min-height: 42px;
+            color: #8a8a8a;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .backend-loader-note {
+            margin-top: 18px;
+            color: #525252;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .backend-retry-btn {
+            margin-top: 22px;
+            padding: 11px 20px;
+            color: #0f0f0f;
+            background: #fafafa;
+            border: 0;
+            border-radius: 8px;
+            font: 600 13px 'Inter', sans-serif;
+            cursor: pointer;
+        }
+
+        .backend-retry-btn:disabled {
+            color: #737373;
+            background: #333;
+            cursor: wait;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .backend-loader-spinner,
+            .spinner {
+                animation-duration: 1.6s;
+            }
+        }
+
         /* ========== HOMEPAGE ========== */
         .homepage {
             min-height: 100vh;
@@ -714,8 +794,19 @@
 
 <body>
 
+    <!-- Shown while the Render service starts, and again if it goes back to sleep. -->
+    <div id="backendLoadingScreen" class="backend-loader" role="status" aria-live="polite" aria-busy="true">
+        <div class="backend-loader-card">
+            <div id="backendLoaderSpinner" class="backend-loader-spinner" aria-hidden="true"></div>
+            <h1 id="backendLoaderTitle" class="backend-loader-title">Starting the learning platform</h1>
+            <p id="backendLoaderMessage" class="backend-loader-message">Connecting to the backend…</p>
+            <p id="backendLoaderNote" class="backend-loader-note">Render may need up to a minute to wake from sleep. You can leave this screen open.</p>
+            <button id="backendRetryBtn" class="backend-retry-btn hidden" type="button" onclick="retryBackend()">Try again</button>
+        </div>
+    </div>
+
     <!-- ========== HOMEPAGE ========== -->
-    <div id="homePage" class="homepage">
+    <div id="homePage" class="homepage hidden">
         <div class="homepage-title">Learning Management System</div>
         <h1 class="homepage-heading">Welcome</h1>
         <p class="homepage-subheading">Select your role to continue</p>
@@ -874,6 +965,107 @@
         let selectedRole = null;
         let currentCourse = null;
         let studentCourses = [];
+        let backendIsBooting = true;
+        let activeApiRequests = 0;
+        let apiLoaderTimer = null;
+        let apiMessageTimer = null;
+
+        const nativeFetch = window.fetch.bind(window);
+
+        function showBackendLoader(title, message, showRetry = false) {
+            document.getElementById('backendLoaderTitle').textContent = title;
+            document.getElementById('backendLoaderMessage').textContent = message;
+            document.getElementById('backendLoaderSpinner').classList.toggle('hidden', showRetry);
+            document.getElementById('backendRetryBtn').classList.toggle('hidden', !showRetry);
+            document.getElementById('backendLoadingScreen').classList.remove('hidden');
+        }
+
+        function hideBackendLoader() {
+            clearTimeout(apiMessageTimer);
+            document.getElementById('backendLoadingScreen').classList.add('hidden');
+        }
+
+        function fetchWithTimeout(url, options = {}, timeout = 15000) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+            return nativeFetch(url, { ...options, signal: controller.signal })
+                .finally(() => clearTimeout(timeoutId));
+        }
+
+        async function initializeBackend() {
+            backendIsBooting = true;
+            const retryButton = document.getElementById('backendRetryBtn');
+            retryButton.disabled = true;
+            document.getElementById('homePage').classList.add('hidden');
+            showBackendLoader('Starting the learning platform', 'Connecting to the backend…');
+
+            const maxAttempts = 6;
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                if (attempt > 1) {
+                    showBackendLoader(
+                        'Waking up the backend',
+                        `Render is still starting the service (attempt ${attempt} of ${maxAttempts})…`
+                    );
+                }
+
+                try {
+                    const response = await fetchWithTimeout(`${API}/health`, { cache: 'no-store' });
+                    if (response.ok) {
+                        backendIsBooting = false;
+                        retryButton.disabled = false;
+                        hideBackendLoader();
+                        document.getElementById('homePage').classList.remove('hidden');
+                        return;
+                    }
+                } catch (error) {
+                    console.info('Backend wake-up attempt failed:', error.message);
+                }
+
+                if (attempt < maxAttempts) {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                }
+            }
+
+            backendIsBooting = false;
+            retryButton.disabled = false;
+            showBackendLoader(
+                'The backend is taking longer than expected',
+                'We could not reach the service yet. Check your connection or try again.',
+                true
+            );
+        }
+
+        function retryBackend() {
+            initializeBackend();
+        }
+
+        async function apiFetch(url, options = {}) {
+            activeApiRequests += 1;
+
+            if (activeApiRequests === 1 && !backendIsBooting) {
+                apiLoaderTimer = setTimeout(() => {
+                    showBackendLoader('Working on your request', 'Waiting for a response from the backend…');
+                    apiMessageTimer = setTimeout(() => {
+                        document.getElementById('backendLoaderTitle').textContent = 'Still working';
+                        document.getElementById('backendLoaderMessage').textContent = 'The backend may be waking up or processing your request. We will continue automatically…';
+                    }, 7000);
+                }, 800);
+            }
+
+            try {
+                return await nativeFetch(url, options);
+            } finally {
+                activeApiRequests = Math.max(0, activeApiRequests - 1);
+                if (activeApiRequests === 0 && !backendIsBooting) {
+                    clearTimeout(apiLoaderTimer);
+                    hideBackendLoader();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeBackend);
 
         // ========== NAVIGATION ==========
         function selectRole(role) {
@@ -966,7 +1158,7 @@
                 return;
             }
 
-            const res = await fetch(`${API}/users/login?user_id=${id}&name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}&role=${selectedRole}`, { method: 'POST' });
+            const res = await apiFetch(`${API}/users/login?user_id=${id}&name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}&role=${selectedRole}`, { method: 'POST' });
 
             if (!res.ok) {
                 const err = await res.json();
@@ -995,7 +1187,7 @@
 
             console.log('Creating course:', { name, teacherId: user.id });
 
-            const res = await fetch(`${API}/courses/`, {
+            const res = await apiFetch(`${API}/courses/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: name, teacher_id: user.id })
@@ -1015,7 +1207,7 @@
         }
 
         async function loadTeacherCourses() {
-            const res = await fetch(`${API}/courses/teacher/${user.id}`);
+            const res = await apiFetch(`${API}/courses/teacher/${user.id}`);
             const courses = await res.json();
 
             if (courses.length === 0) {
@@ -1048,7 +1240,7 @@
 
             console.log('Creating assignment:', { courseId, title, task, dueDate });
 
-            const res = await fetch(`${API}/courses/${courseId}/assignments`, {
+            const res = await apiFetch(`${API}/courses/${courseId}/assignments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title: title, task: task, due_date: dueDate, course_id: parseInt(courseId) })
@@ -1071,7 +1263,7 @@
         // ========== STUDENT - COURSES ==========
         async function loadStudentCourses() {
             console.log('Loading courses for student:', user.id);
-            const res = await fetch(`${API}/courses/student/${user.id}/courses`);
+            const res = await apiFetch(`${API}/courses/student/${user.id}/courses`);
             studentCourses = await res.json();
             console.log('Student courses:', studentCourses);
             renderSidebar();
@@ -1111,7 +1303,7 @@
             // Load assignments for this course
             try {
                 console.log('Loading assignments for course:', currentCourse.id, 'student:', user.id);
-                const res = await fetch(`${API}/courses/${currentCourse.id}/assignments/pending/${user.id}`);
+                const res = await apiFetch(`${API}/courses/${currentCourse.id}/assignments/pending/${user.id}`);
 
                 if (!res.ok) {
                     const err = await res.json();
@@ -1154,7 +1346,7 @@
             }
 
             // Load submissions
-            const subRes = await fetch(`${API}/assignments/user/${user.id}/submissions`);
+            const subRes = await apiFetch(`${API}/assignments/user/${user.id}/submissions`);
             const submissions = await subRes.json();
 
             if (submissions.length === 0) {
@@ -1187,7 +1379,7 @@
             btn.innerHTML = '<span class="spinner"></span>Grading...';
 
             try {
-                const res = await fetch(`${API}/assignments/${assignmentId}/submissions`, {
+                const res = await apiFetch(`${API}/assignments/${assignmentId}/submissions`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ content: content, assignment_id: parseInt(assignmentId), student_id: user.id })
@@ -1250,7 +1442,7 @@
 
             console.log('Joining course:', { courseId: courseIdNum, name, studentId: user.id });
 
-            const res = await fetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}&course_id=${courseIdNum}`, { method: 'POST' });
+            const res = await apiFetch(`${API}/courses/enroll/${user.id}?course_name=${encodeURIComponent(name)}&course_id=${courseIdNum}`, { method: 'POST' });
 
             if (res.ok) {
                 const result = await res.json();
